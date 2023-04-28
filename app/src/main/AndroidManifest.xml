@@ -15,7 +15,7 @@
             android:name=".onboarding.OnBoardingActivity"
             android:exported="false" />-->
         <activity
-            android:name=".onboarding.OnBoardingActivity"
+            android:name=".onBoarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

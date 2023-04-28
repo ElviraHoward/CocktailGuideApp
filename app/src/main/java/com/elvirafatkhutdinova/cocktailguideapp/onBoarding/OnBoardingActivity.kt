@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.onboarding
+package com.elvirafatkhutdinova.cocktailguideapp.onBoarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,13 +6,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityOnboardingBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 private const val NUM_PAGES = 3
 
 class OnBoardingActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
-    private lateinit var viewPager : ViewPager2
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +23,9 @@ class OnBoardingActivity : FragmentActivity() {
         viewPager = binding.viewPager
         val adapter = SlidePagerAdapter(this)
         viewPager.adapter = adapter
+        val tabLayout = binding.tabsLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        }.attach()
         setContentView(view)
     }
 
@@ -37,6 +41,6 @@ class OnBoardingActivity : FragmentActivity() {
 
         override fun getItemCount(): Int = NUM_PAGES
 
-        override fun createFragment(position: Int): Fragment = OnBoardingFragment()
+        override fun createFragment(position: Int): Fragment = OnBoardingWelcomeFragment()
     }
 }
