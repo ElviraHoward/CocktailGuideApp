@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Cocktail Guide App</string>
-    <string name="on_boarding">Hello, it is the Cocktail Guide App</string>
+    <string-array name="onboarding_texts">
+        <item>Hello, it is your personal cocktail guide!</item>
+        <item>Find recipes based on available ingredients and enjoy cooking!</item>
+        <item>Share with friends, make your own party!</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip_button">Skip</string>
+    <string name="get_started_button">Get started</string>
 </resources>

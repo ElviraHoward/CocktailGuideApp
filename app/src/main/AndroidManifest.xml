@@ -11,9 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailGuideApp"
         tools:targetApi="31">
-<!--        <activity
-            android:name=".onboarding.OnBoardingActivity"
-            android:exported="false" />-->
+       <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
             android:name=".onBoarding.OnBoardingActivity"
             android:exported="true">
