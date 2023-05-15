@@ -1,11 +1,11 @@
-package com.elvirafatkhutdinova.cocktailguideapp.fragments
+package com.elvirafatkhutdinova.cocktailguideapp.UI.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.elvirafatkhutdinova.cocktailguideapp.R
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.onBoarding
+package com.elvirafatkhutdinova.cocktailguideapp.UI.onBoarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

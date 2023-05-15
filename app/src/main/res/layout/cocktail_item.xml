@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+
+    <ImageView
+        android:id="@+id/cocktailImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_empty_image"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/cocktailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cocktailImage"
+        android:textSize="16sp"
+        android:textColor="@color/black_text"
+        android:textStyle="bold"
+        android:text="TextView" />
+</RelativeLayout>
