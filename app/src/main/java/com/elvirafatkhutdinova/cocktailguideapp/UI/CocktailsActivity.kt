@@ -1,27 +1,33 @@
 package com.elvirafatkhutdinova.cocktailguideapp.UI
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.elvirafatkhutdinova.cocktailguideapp.R
-import com.elvirafatkhutdinova.cocktailguideapp.repository.Repository
+import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityCocktailsBinding
 
 class CocktailsActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : CocktailViewModel
+    private var _binding : ActivityCocktailsBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cocktails)
+        _binding = ActivityCocktailsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        val repository = Repository()
-        val viewModelFactory = CocktailViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CocktailViewModel::class.java)
-        viewModel.getCocktails()
-        viewModel.cocktailResponse.observe(this, Observer { response ->
-            Log.d("Response", response.drinks.get(1).strDrink)
-        })
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

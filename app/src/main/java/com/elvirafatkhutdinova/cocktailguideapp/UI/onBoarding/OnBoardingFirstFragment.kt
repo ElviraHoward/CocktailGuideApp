@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.elvirafatkhutdinova.cocktailguideapp.R
-import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentOnBoardingFirstBinding
+import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentOnBoardingBinding
 
 class OnBoardingFirstFragment : Fragment() {
 
@@ -18,14 +18,14 @@ class OnBoardingFirstFragment : Fragment() {
         }
     }
 
-    private var _binding: FragmentOnBoardingFirstBinding? = null
+    private var _binding: FragmentOnBoardingBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentOnBoardingFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentOnBoardingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
