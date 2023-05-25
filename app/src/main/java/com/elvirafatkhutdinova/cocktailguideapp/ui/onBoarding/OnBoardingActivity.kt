@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.UI.onBoarding
+package com.elvirafatkhutdinova.cocktailguideapp.ui.onBoarding
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.elvirafatkhutdinova.cocktailguideapp.UI.CocktailsActivity
+import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityOnboardingBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -77,6 +77,6 @@ class OnBoardingActivity : FragmentActivity() {
         override fun getItemCount(): Int = NUM_PAGES
 
         override fun createFragment(position: Int): Fragment =
-            OnBoardingFirstFragment.getInstance(position)
+            OnBoardingFragment.getInstance(position)
     }
 }

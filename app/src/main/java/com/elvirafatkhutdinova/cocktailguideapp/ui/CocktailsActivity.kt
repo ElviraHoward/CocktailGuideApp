@@ -1,10 +1,12 @@
-package com.elvirafatkhutdinova.cocktailguideapp.UI
+package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityCocktailsBinding
@@ -23,6 +25,8 @@ class CocktailsActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.cocktailsFragment, R.id.categoriesFragment, R.id.favouritesFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 

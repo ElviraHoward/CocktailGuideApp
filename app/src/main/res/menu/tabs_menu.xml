@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/cocktailsFragment"
-        android:title="Cocktails"
+        android:title="@string/cocktails_tab"
         android:icon="@drawable/ic_cockails"/>
 
     <item android:id="@+id/categoriesFragment"
-        android:title="Categories"
+        android:title="@string/categories_tab"
         android:icon="@drawable/ic_categories"/>
 
     <item android:id="@+id/favouritesFragment"
-        android:title="Favourites"
+        android:title="@string/favourites_tab"
         android:icon="@drawable/ic_favorites"/>
 </menu>

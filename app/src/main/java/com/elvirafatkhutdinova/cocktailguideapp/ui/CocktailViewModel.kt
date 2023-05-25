@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.UI
+package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

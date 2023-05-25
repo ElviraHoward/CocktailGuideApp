@@ -15,10 +15,10 @@
         android:theme="@style/Theme.CocktailGuideApp"
         tools:targetApi="31">
        <activity
-            android:name=".UI.CocktailsActivity"
+            android:name=".ui.CocktailsActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.onBoarding.OnBoardingActivity"
+            android:name=".ui.onBoarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

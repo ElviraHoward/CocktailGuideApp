@@ -9,4 +9,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip_button">Skip</string>
     <string name="get_started_button">Get started</string>
+    <string name="cocktails_tab">Cocktails</string>
+    <string name="categories_tab">Categories</string>
+    <string name="favourites_tab">Favourites</string>
 </resources>
