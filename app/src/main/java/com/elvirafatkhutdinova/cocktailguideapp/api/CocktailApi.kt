@@ -1,6 +1,6 @@
 package com.elvirafatkhutdinova.cocktailguideapp.api
 
-import com.elvirafatkhutdinova.cocktailguideapp.model.CocktailsResponse
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

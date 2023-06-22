@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.model
+package com.elvirafatkhutdinova.cocktailguideapp.data.model
 
 data class CocktailsResponse(
     val drinks: List<Drink>

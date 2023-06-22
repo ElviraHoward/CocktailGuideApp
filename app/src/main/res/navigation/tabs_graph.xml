@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cocktailsFragment"
-        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailsFragment"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailListFragment"
         android:label="@string/cocktails_tab"
         tools:layout="@layout/fragment_cocktails" >
         <action
@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFragment_to_favouritesFragment"
             app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_cocktailsFragment_to_cocktailDetailFragment"
+            app:destination="@id/cocktailDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
@@ -35,4 +38,9 @@
             android:id="@+id/action_favouritesFragment_to_mainFragment"
             app:destination="@id/cocktailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cocktailDetailFragment"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailDetailFragment"
+        android:label="fragment_cocktail_detail"
+        tools:layout="@layout/fragment_cocktail_detail" />
 </navigation>

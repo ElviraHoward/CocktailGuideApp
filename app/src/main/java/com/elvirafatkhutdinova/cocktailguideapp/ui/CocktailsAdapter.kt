@@ -2,14 +2,17 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.CocktailItemBinding
-import com.elvirafatkhutdinova.cocktailguideapp.model.Drink
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
 
 class CocktailsAdapter: RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolder>() {
 
     private var cocktailsList = emptyList<Drink>()
+    private var onItemClickListener: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailsViewHolder {
         val itemBinding = CocktailItemBinding.inflate(
@@ -30,6 +33,9 @@ class CocktailsAdapter: RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolde
             holder.itemView.apply {
                 binding.cocktailText.text = cocktail.strDrink
                 Glide.with(this).load(cocktail.strDrinkThumb).into(binding.cocktailImage)
+                setOnClickListener {
+                    onItemClickListener?.let { it(cocktail.id) }
+                }
             }
         }
     }
@@ -38,6 +44,11 @@ class CocktailsAdapter: RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolde
         cocktailsList = newCocktailsList
         notifyDataSetChanged()
     }
+
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        onItemClickListener = listener
+    }
+
 
     inner class CocktailsViewHolder(val binding: CocktailItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

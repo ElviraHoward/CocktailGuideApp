@@ -1,12 +1,15 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.elvirafatkhutdinova.cocktailguideapp.repository.Repository
 
-class CocktailViewModelFactory(private val repository: Repository): ViewModelProvider.Factory {
+class CocktailViewMdelFactory(val app : Application): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CocktailViewModel(repository) as T
+        if (modelClass.isAssignableFrom(CocktailViewModel::class.java)) {
+            return CocktailViewModel(app) as T
+        }
+        throw java.lang.IllegalArgumentException ("Unable to construct viewmodel")
     }
 }
