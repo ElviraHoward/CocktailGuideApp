@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.CocktailListFragment">
 
-    <TextView
-        android:id="@+id/greetingsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose cocktail for evening!"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black_text"
-        android:layout_margin="10dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cocktailsRecyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/greetingsText"
-        android:layout_marginBottom="56dp"/>
+        android:layout_marginBottom="56dp">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/greetingsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose cocktail for the evening!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black_text"
+            android:layout_margin="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cocktailsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/greetingsText" />
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

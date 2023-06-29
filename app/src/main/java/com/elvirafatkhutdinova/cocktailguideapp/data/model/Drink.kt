@@ -1,14 +1,12 @@
 package com.elvirafatkhutdinova.cocktailguideapp.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity
 data class Drink(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val dateModified: String?,
-    val idDrink: String,
+    @PrimaryKey
+    @field:TypeConverters(Converters::class)
+    @ColumnInfo(name = "id") val idDrink: String,
     val strAlcoholic: String?,
     val strCategory: String?,
     val strDrink: String?,
@@ -63,8 +61,8 @@ data class Drink(
             strIngredient13 to strMeasure13,
             strIngredient14 to strMeasure14,
             strIngredient15 to strMeasure15
-        ).filter { (ingredient, measure) ->
-            !ingredient.isNullOrBlank() && !measure.isNullOrBlank()
+        ).filter { (ingredient) ->
+            !ingredient.isNullOrBlank()
         }
     }
 }

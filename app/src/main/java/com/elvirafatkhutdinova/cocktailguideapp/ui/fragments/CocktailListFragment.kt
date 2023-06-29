@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
 import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsAdapter
+import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
 class CocktailListFragment : Fragment(R.layout.fragment_cocktails) {
 
@@ -51,5 +51,15 @@ class CocktailListFragment : Fragment(R.layout.fragment_cocktails) {
             }
             findNavController().navigate(R.id.action_cocktailsFragment_to_cocktailDetailFragment, bundle)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.show()
     }
 }

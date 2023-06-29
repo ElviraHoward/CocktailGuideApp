@@ -1,10 +1,8 @@
-package com.elvirafatkhutdinova.cocktailguideapp.ui
+package com.elvirafatkhutdinova.cocktailguideapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.RecipeTuple
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.IngredientItemBinding
 
 class RecipeAdapter(private val recipeList: List<Pair<String?, String?>>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
