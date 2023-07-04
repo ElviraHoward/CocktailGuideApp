@@ -1,24 +1,24 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.DrinkDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.repository.DrinkRepository
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
+import com.elvirafatkhutdinova.cocktailguideapp.data.AppDatabase
+import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CocktailRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class CocktailViewModel(application: Application) : AndroidViewModel(application) {
+class CocktailViewModel(application: Application) : ViewModel() {
 
-    private val repository = DrinkRepository(DrinkDatabase.getDatabase(application))
-    val cocktails = repository.drinks
+    private val repository = CocktailRepository(AppDatabase.getDatabase(application))
+    val cocktails = repository.cocktails
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-    private val _drink = MutableLiveData<Drink>()
-    val drink : LiveData<Drink> get() = _drink
+    private val _cocktail = MutableLiveData<Cocktail>()
+    val cocktail : LiveData<Cocktail> get() = _cocktail
 
     val eventNetworkError : LiveData<Boolean>
         get() = _eventNetworkError
@@ -47,7 +47,7 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
     fun getCocktailById(id : Int) {
         val drinkLiveData = repository.getCocktail(id)
         drinkLiveData.observeForever { drink ->
-            _drink.value = drink
+            _cocktail.value = drink
         }
     }
 

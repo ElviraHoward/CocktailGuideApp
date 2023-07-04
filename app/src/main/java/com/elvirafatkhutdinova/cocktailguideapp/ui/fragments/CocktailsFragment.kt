@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
-class CocktailListFragment : Fragment(R.layout.fragment_cocktails) {
+class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
     private var _binding : FragmentCocktailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : CocktailViewModel by activityViewModels()
+    private val viewModel : CocktailViewModel by viewModels()
     private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
@@ -39,9 +39,9 @@ class CocktailListFragment : Fragment(R.layout.fragment_cocktails) {
         binding.cocktailsRecyclerView.adapter = cocktailsAdapter
         binding.cocktailsRecyclerView.layoutManager = GridLayoutManager(activity, 2)
 
-        viewModel.cocktails.observe(viewLifecycleOwner, Observer<List<Drink>> { drinks ->
-            drinks?.apply {
-                cocktailsAdapter.setData(drinks)
+        viewModel.cocktails.observe(viewLifecycleOwner, Observer<List<Cocktail>> { cocktail ->
+            cocktail?.apply {
+                cocktailsAdapter.setData(cocktail)
             }
         })
 

@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.CocktailItemBinding
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Drink
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
 
 class CocktailsAdapter: RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolder>() {
 
-    private var cocktailsList = emptyList<Drink>()
+    private var cocktailsList = emptyList<Cocktail>()
     private var onItemClickListener: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailsViewHolder {
@@ -38,7 +38,7 @@ class CocktailsAdapter: RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolde
         }
     }
 
-    fun setData (newCocktailsList : List<Drink>) {
+    fun setData (newCocktailsList : List<Cocktail>) {
         cocktailsList = newCocktailsList
         notifyDataSetChanged()
     }
