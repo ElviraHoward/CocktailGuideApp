@@ -13,7 +13,7 @@ class CategoryRepository(private val database: AppDatabase) {
 
     suspend fun refreshCategories() {
         withContext(Dispatchers.IO) {
-            val categories = RetrofitInstance.api.getCategories().categories
+            val categories = RetrofitInstance.api.getCategories().drinks
             database.categoryDao().insertCategory(categories)
         }
     }

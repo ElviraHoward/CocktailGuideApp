@@ -5,8 +5,6 @@
         <item>Find recipes based on available ingredients and enjoy cooking!</item>
         <item>Share with friends, make your own party!</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip_button">Skip</string>
     <string name="get_started_button">Get started</string>
     <string name="cocktails_tab">Cocktails</string>

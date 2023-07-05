@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +22,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     private var _binding : FragmentCocktailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : CocktailViewModel by viewModels()
+    private val viewModel : CocktailViewModel by activityViewModels()
     private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
@@ -30,6 +31,12 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCocktailsBinding.inflate(layoutInflater, container, false)
+
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        })
+
+
         return binding.root
     }
 
@@ -45,11 +52,18 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
             }
         })
 
-        cocktailsAdapter.setOnItemClickListener {
+        cocktailsAdapter.onItemClick {
             val bundle = Bundle().apply {
                 putInt("idDrink", it)
             }
             findNavController().navigate(R.id.action_cocktailsFragment_to_cocktailDetailFragment, bundle)
+        }
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
         }
     }
 

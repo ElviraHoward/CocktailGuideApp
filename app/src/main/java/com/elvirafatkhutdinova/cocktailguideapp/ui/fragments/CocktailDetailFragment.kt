@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.R
@@ -19,7 +18,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
 
     private var _binding : FragmentCocktailDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : CocktailViewModel by viewModels()
+    private val viewModel : CocktailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

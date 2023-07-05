@@ -13,12 +13,16 @@ class CocktailRepository(private val database: AppDatabase) {
 
     suspend fun refreshCocktails() {
         withContext(Dispatchers.IO) {
-            val cocktails = RetrofitInstance.api.getCocktailByFirstLetter()
-            database.drinkDao().insertCocktail(cocktails.cocktails)
+            val cocktailsResponse = RetrofitInstance.api.getCocktailByFirstLetter()
+            database.drinkDao().insertCocktail(cocktailsResponse.drinks)
         }
     }
 
     fun getCocktail(id : Int) : LiveData<Cocktail> {
         return database.drinkDao().getCocktailById(id)
+    }
+
+    fun getCocktailsByCategory(category : String) : LiveData<List<Cocktail>> {
+        return database.drinkDao().getCocktailsByCategory(category)
     }
 }
