@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityOnboardingBinding
+import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
 private const val NUM_PAGES = 3
@@ -47,7 +47,6 @@ class OnBoardingActivity : FragmentActivity() {
                 }
             }
         }
-
         viewPager.registerOnPageChangeCallback(myPageChangeCallback)
 
         setContentView(view)

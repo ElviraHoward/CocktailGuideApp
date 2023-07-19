@@ -9,7 +9,7 @@
         android:title="@string/categories_tab"
         android:icon="@drawable/ic_categories"/>
 
-    <item android:id="@+id/favouritesFragment"
-        android:title="@string/favourites_tab"
+    <item android:id="@+id/favoritesFragment"
+        android:title="@string/favorites_tab"
         android:icon="@drawable/ic_favorites"/>
 </menu>

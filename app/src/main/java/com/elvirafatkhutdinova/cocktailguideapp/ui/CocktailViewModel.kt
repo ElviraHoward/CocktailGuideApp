@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.elvirafatkhutdinova.cocktailguideapp.data.AppDatabase
 import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CocktailRepository
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CategoryRepository
+import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -14,10 +16,10 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
     private val repositoryCocktail = CocktailRepository(AppDatabase.getDatabase(application))
     val cocktails = repositoryCocktail.cocktails
     private val _cocktail = MutableLiveData<Cocktail>()
-    val cocktail : LiveData<Cocktail> get() = _cocktail
+    val cocktail: LiveData<Cocktail> get() = _cocktail
 
     private val _cocktailList = MutableLiveData<List<Cocktail>>()
-    val cocktailList : LiveData<List<Cocktail>> get() = _cocktailList
+    val cocktailList: LiveData<List<Cocktail>> get() = _cocktailList
 
     private val repositoryCategory = CategoryRepository(AppDatabase.getDatabase(application))
     val categories = repositoryCategory.categories
@@ -25,10 +27,10 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
 
-    val eventNetworkError : LiveData<Boolean>
+    val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
-    val isNetworkErrorShown : LiveData<Boolean>
+    val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
     init {
@@ -42,7 +44,7 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
                 repositoryCocktail.refreshCocktails()
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
-            } catch (networkError : IOException) {
+            } catch (networkError: IOException) {
                 if (cocktails.value.isNullOrEmpty()) {
                     _eventNetworkError.value = true
                 }
@@ -56,17 +58,30 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun getCocktailById(id : Int) {
+    fun getCocktailById(id: Int) {
         val drinkLiveData = repositoryCocktail.getCocktail(id)
         drinkLiveData.observeForever { drink ->
             _cocktail.value = drink
         }
     }
 
-    fun getCocktailsByCategory(category : String) {
+    fun getCocktailsByCategory(category: String) {
         val drinkLiveData = repositoryCocktail.getCocktailsByCategory(category)
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
+        }
+    }
+
+    fun getCocktailsByFavorite(isFavorite: Boolean) {
+        val drinkLiveData = repositoryCocktail.getCocktailsByFavorite(isFavorite)
+        drinkLiveData.observeForever { drinks ->
+            _cocktailList.value = drinks
+        }
+    }
+
+    fun setFavoriteCocktail(isFavorite: Boolean, id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            repositoryCocktail.updateCocktailByFavorite(isFavorite, id)
         }
     }
 

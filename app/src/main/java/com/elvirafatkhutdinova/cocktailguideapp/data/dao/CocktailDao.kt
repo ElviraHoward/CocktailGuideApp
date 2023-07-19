@@ -2,23 +2,29 @@ package com.elvirafatkhutdinova.cocktailguideapp.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailEntity
 
 @Dao
 interface CocktailDao {
 
     @Query("SELECT * FROM cocktail")
-    fun getAllCocktails() : LiveData<List<Cocktail>>
+    fun getAllCocktails() : LiveData<List<CocktailEntity>>
 
     @Query("SELECT * FROM cocktail WHERE id=:id")
-    fun getCocktailById(id : Int) : LiveData<Cocktail>
+    fun getCocktailById(id : Int) : LiveData<CocktailEntity>
 
     @Query("SELECT * FROM cocktail WHERE category=:category")
-    fun getCocktailsByCategory(category : String) : LiveData<List<Cocktail>>
+    fun getCocktailsByCategory(category : String) : LiveData<List<CocktailEntity>>
+
+    @Query("SELECT * FROM cocktail WHERE is_favorite=:isFavorite")
+    fun getCocktailsByFavorite(isFavorite : Boolean) : LiveData<List<CocktailEntity>>
+
+    @Query("UPDATE cocktail SET is_favorite=:isFavorite WHERE id=:id")
+    fun updateCocktailByFavorite(isFavorite : Boolean, id: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCocktail(cocktails: List<Cocktail>)
+    fun insertCocktails(cocktailEntities: List<CocktailEntity>)
 
     @Delete
-    fun deleteCocktail(cocktail: Cocktail)
+    fun deleteCocktail(cocktailEntity: CocktailEntity)
 }

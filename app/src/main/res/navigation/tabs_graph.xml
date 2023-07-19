@@ -14,8 +14,8 @@
             android:id="@+id/action_mainFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_favouritesFragment"
-            app:destination="@id/favouritesFragment" />
+            android:id="@+id/action_mainFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
         <action
             android:id="@+id/action_cocktailsFragment_to_cocktailDetailFragment"
             app:destination="@id/cocktailDetailFragment" />
@@ -26,16 +26,16 @@
         android:label="@string/categories_tab"
         tools:layout="@layout/fragment_categories" >
         <action
-            android:id="@+id/action_categoriesFragment_to_mainFragment"
-            app:destination="@id/cocktailsFragment" />
+            android:id="@+id/action_categoriesFragment_to_cocktailsByCategoryFragment"
+            app:destination="@id/cocktailsByCategoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/favouritesFragment"
-        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.FavouritesFragment"
-        android:label="@string/favourites_tab"
-        tools:layout="@layout/fragment_favourites" >
+        android:id="@+id/favoritesFragment"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.FavoritesFragment"
+        android:label="@string/favorites_tab"
+        tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/action_favouritesFragment_to_mainFragment"
+            android:id="@+id/action_favoritesFragment_to_mainFragment"
             app:destination="@id/cocktailsFragment" />
     </fragment>
     <fragment
@@ -43,4 +43,13 @@
         android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailDetailFragment"
         android:label="fragment_cocktail_detail"
         tools:layout="@layout/fragment_cocktail_detail" />
+    <fragment
+        android:id="@+id/cocktailsByCategoryFragment"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailsByCategoryFragment"
+        android:label="fragment_cocktails_by_category"
+        tools:layout="@layout/fragment_cocktails_by_category" >
+        <action
+            android:id="@+id/action_cocktailsByCategoryFragment_to_cocktailDetailFragment"
+            app:destination="@id/cocktailDetailFragment" />
+    </fragment>
 </navigation>

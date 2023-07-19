@@ -34,13 +34,13 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories?.apply {
                 val categoriesAdapter = CategoriesAdapter(categories)
-                binding.categoriesList.adapter = categoriesAdapter
-                binding.categoriesList.layoutManager = LinearLayoutManager(activity)
+                binding.rvCategories.adapter = categoriesAdapter
+                binding.rvCategories.layoutManager = LinearLayoutManager(activity)
                 categoriesAdapter.onItemClick {
                     val bundle = Bundle().apply {
                         putString("category", it)
                     }
-                    findNavController().navigate(R.id.action_categoriesFragment_to_mainFragment, bundle) }
+                    findNavController().navigate(R.id.action_categoriesFragment_to_cocktailsByCategoryFragment, bundle) }
             }
         }
 

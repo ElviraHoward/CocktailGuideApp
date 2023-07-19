@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.elvirafatkhutdinova.cocktailguideapp.R
 
-class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
+class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

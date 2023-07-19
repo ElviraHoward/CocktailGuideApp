@@ -1,6 +1,7 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,14 +34,14 @@ class CocktailsActivity : AppCompatActivity() {
 
         supportActionBar?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            elevation = 0f
+            elevation = 5f
         }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.cocktailsFragment, R.id.categoriesFragment, R.id.favouritesFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.cocktailsFragment, R.id.categoriesFragment, R.id.favoritesFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNav.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

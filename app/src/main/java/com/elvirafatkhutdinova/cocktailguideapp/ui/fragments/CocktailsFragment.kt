@@ -13,16 +13,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Cocktail
+import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
 class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
-    private var _binding : FragmentCocktailsBinding? = null
+    private var _binding: FragmentCocktailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : CocktailViewModel by activityViewModels()
+    private val viewModel: CocktailViewModel by activityViewModels()
     private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
@@ -32,10 +32,11 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     ): View? {
         _binding = FragmentCocktailsBinding.inflate(layoutInflater, container, false)
 
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
-            if (isNetworkError) onNetworkError()
-        })
-
+        viewModel.eventNetworkError.observe(
+            viewLifecycleOwner,
+            Observer<Boolean> { isNetworkError ->
+                if (isNetworkError) onNetworkError()
+            })
 
         return binding.root
     }
@@ -43,8 +44,8 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.cocktailsRecyclerView.adapter = cocktailsAdapter
-        binding.cocktailsRecyclerView.layoutManager = GridLayoutManager(activity, 2)
+        binding.rvCocktails.adapter = cocktailsAdapter
+        binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
 
         viewModel.cocktails.observe(viewLifecycleOwner, Observer<List<Cocktail>> { cocktail ->
             cocktail?.apply {
@@ -56,12 +57,15 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
             val bundle = Bundle().apply {
                 putInt("idDrink", it)
             }
-            findNavController().navigate(R.id.action_cocktailsFragment_to_cocktailDetailFragment, bundle)
+            findNavController().navigate(
+                R.id.action_cocktailsFragment_to_cocktailDetailFragment,
+                bundle
+            )
         }
     }
 
     private fun onNetworkError() {
-        if(!viewModel.isNetworkErrorShown.value!!) {
+        if (!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }

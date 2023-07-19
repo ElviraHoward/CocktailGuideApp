@@ -3,8 +3,8 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.Category
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.CategoryItemBinding
+import com.elvirafatkhutdinova.cocktailguideapp.domain.Category
 import com.elvirafatkhutdinova.cocktailguideapp.ui.OnItemClickListener
 
 class CategoriesAdapter(private val categories: List<Category>) :

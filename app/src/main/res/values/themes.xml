@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CocktailGuideApp" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.CocktailGuideApp" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/dark_green</item>
@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBarOverlay">true</item>
         <item name="titleTextColor">@color/black_text</item>
+        <item name="colorControlNormal">@color/black_text</item>
     </style>
 
 </resources>
