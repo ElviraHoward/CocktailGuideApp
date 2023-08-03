@@ -46,8 +46,7 @@ fun CocktailListResponse.asDomainModel(): List<Cocktail> {
             strMeasure12 = it.strMeasure12,
             strMeasure13 = it.strMeasure13,
             strMeasure14 = it.strMeasure14,
-            strMeasure15 = it.strMeasure15,
-            false
+            strMeasure15 = it.strMeasure15
         )
     }
 }
@@ -91,8 +90,7 @@ fun CocktailListResponse.asDatabaseModel(): List<CocktailEntity> {
             strMeasure12 = it.strMeasure12,
             strMeasure13 = it.strMeasure13,
             strMeasure14 = it.strMeasure14,
-            strMeasure15 = it.strMeasure15,
-            false
+            strMeasure15 = it.strMeasure15
         )
     }
 }

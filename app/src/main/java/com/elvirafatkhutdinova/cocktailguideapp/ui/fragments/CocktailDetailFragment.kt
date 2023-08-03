@@ -1,8 +1,10 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -20,7 +22,8 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
     private var _binding: FragmentCocktailDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val idDrink by lazy { arguments?.getInt("idDrink") ?: 0 }
+    private val idDrink by lazy { arguments?.getString("idDrink") ?: "" }
+    private var isAdded: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +36,6 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val idDrink = arguments?.getInt("idDrink") ?: 0
         viewModel.getCocktailById(idDrink)
         viewModel.cocktail.observe(viewLifecycleOwner) {
             binding.drinkName.text = it.strDrink
@@ -46,7 +48,10 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
             binding.ingredientsList.adapter = recipeAdapter
             binding.ingredientsList.layoutManager = LinearLayoutManager(activity)
         }
-        setupMenu()
+        viewModel.isFavoriteCocktail(idDrink).observe(viewLifecycleOwner) {
+            isAdded = it
+            setupMenu()
+        }
     }
 
     private fun setupMenu() {
@@ -59,13 +64,27 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.action_favorite -> {
-                        viewModel.setFavoriteCocktail(true, idDrink)
+                        isAdded = !isAdded
+                        menuItem.icon = setActionButtonIcon()
+                        if (isAdded) viewModel.setFavoriteCocktail(idDrink) else viewModel.deleteFavorite(idDrink)
                         true
                     }
                     else -> false
                 }
             }
+
+            override fun onPrepareMenu(menu: Menu) {
+                menu.findItem(R.id.action_favorite).icon = setActionButtonIcon()
+                super.onPrepareMenu(menu)
+            }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    fun setActionButtonIcon(): Drawable? {
+        return ContextCompat.getDrawable(
+            requireActivity(),
+            if (isAdded) R.drawable.ic_added_favorite else R.drawable.ic_add_to_favorites
+        )
     }
 
     override fun onResume() {

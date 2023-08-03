@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_favoritesFragment_to_mainFragment"
             app:destination="@id/cocktailsFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_cocktailDetailFragment"
+            app:destination="@id/cocktailDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cocktailDetailFragment"

@@ -6,8 +6,7 @@ import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 @Entity(tableName = "cocktail")
 data class CocktailEntity(
     @PrimaryKey
-    @field:TypeConverters(Converters::class)
-    @ColumnInfo(name = "id") val idDrink: String,
+    @ColumnInfo(name = "id_cocktail") val idDrink: String,
     @ColumnInfo(name = "type") val strAlcoholic: String,
     @ColumnInfo(name = "category") val strCategory: String,
     @ColumnInfo(name = "name") val strDrink: String,
@@ -43,8 +42,7 @@ data class CocktailEntity(
     @ColumnInfo(name = "measure_12") val strMeasure12: String?,
     @ColumnInfo(name = "measure_13") val strMeasure13: String?,
     @ColumnInfo(name = "measure_14") val strMeasure14: String?,
-    @ColumnInfo(name = "measure_15") val strMeasure15: String?,
-    @ColumnInfo(name = "is_favorite") val isFavorite: Boolean?
+    @ColumnInfo(name = "measure_15") val strMeasure15: String?
 )
 
 fun List<CocktailEntity>.asDomainModel(): List<Cocktail> {
@@ -89,7 +87,6 @@ fun CocktailEntity.asDomainModel(): Cocktail {
         strMeasure12 = this.strMeasure12,
         strMeasure13 = this.strMeasure13,
         strMeasure14 = this.strMeasure14,
-        strMeasure15 = this.strMeasure15,
-        isFavorite = this.isFavorite
+        strMeasure15 = this.strMeasure15
     )
 }

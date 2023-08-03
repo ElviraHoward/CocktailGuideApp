@@ -3,24 +3,28 @@ package com.elvirafatkhutdinova.cocktailguideapp.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailsAndFavoritesEntity
 
 @Dao
 interface CocktailDao {
 
     @Query("SELECT * FROM cocktail")
-    fun getAllCocktails() : LiveData<List<CocktailEntity>>
+    fun getAllCocktails(): LiveData<List<CocktailEntity>>
 
-    @Query("SELECT * FROM cocktail WHERE id=:id")
-    fun getCocktailById(id : Int) : LiveData<CocktailEntity>
+    @Query("SELECT * FROM cocktail WHERE id_cocktail=:id")
+    fun getCocktailById(id: String): LiveData<CocktailEntity>
 
+    @Transaction
     @Query("SELECT * FROM cocktail WHERE category=:category")
-    fun getCocktailsByCategory(category : String) : LiveData<List<CocktailEntity>>
+    fun getCocktailsByCategory(category: String): LiveData<List<CocktailsAndFavoritesEntity>>
 
-    @Query("SELECT * FROM cocktail WHERE is_favorite=:isFavorite")
-    fun getCocktailsByFavorite(isFavorite : Boolean) : LiveData<List<CocktailEntity>>
+    @Transaction
+    @Query("SELECT * FROM cocktail LEFT JOIN favorite on id_cocktail=id_favorite WHERE id_favorite IS NOT NULL")
+    fun getFavoriteCocktails(): LiveData<List<CocktailsAndFavoritesEntity>>
 
-    @Query("UPDATE cocktail SET is_favorite=:isFavorite WHERE id=:id")
-    fun updateCocktailByFavorite(isFavorite : Boolean, id: Int)
+    @Transaction
+    @Query("SELECT * FROM cocktail")
+    fun getCocktailsAndFavorites(): LiveData<List<CocktailsAndFavoritesEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCocktails(cocktailEntities: List<CocktailEntity>)

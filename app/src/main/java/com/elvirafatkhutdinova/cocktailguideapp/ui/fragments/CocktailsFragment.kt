@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
 import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
+import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
@@ -47,7 +48,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         binding.rvCocktails.adapter = cocktailsAdapter
         binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
 
-        viewModel.cocktails.observe(viewLifecycleOwner, Observer<List<Cocktail>> { cocktail ->
+        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner, Observer<List<CocktailsAndFavorites>> { cocktail ->
             cocktail?.apply {
                 cocktailsAdapter.setData(cocktail)
             }
@@ -55,7 +56,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
         cocktailsAdapter.onItemClick {
             val bundle = Bundle().apply {
-                putInt("idDrink", it)
+                putString("idDrink", it)
             }
             findNavController().navigate(
                 R.id.action_cocktailsFragment_to_cocktailDetailFragment,

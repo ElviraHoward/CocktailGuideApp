@@ -53,7 +53,7 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
 
         cocktailsAdapter.onItemClick {
             val bundle = Bundle().apply {
-                putInt("idDrink", it)
+                putString("idDrink", it)
             }
             findNavController().navigate(
                 R.id.action_cocktailsByCategoryFragment_to_cocktailDetailFragment,

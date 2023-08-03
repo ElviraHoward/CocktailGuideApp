@@ -1,28 +1,37 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.elvirafatkhutdinova.cocktailguideapp.data.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CocktailRepository
 import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CategoryRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CocktailRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.repository.FavoriteRepository
 import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
+import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class CocktailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repositoryCocktail = CocktailRepository(AppDatabase.getDatabase(application))
-    val cocktails = repositoryCocktail.cocktails
+    private val repositoryCategory = CategoryRepository(AppDatabase.getDatabase(application))
+    private val favoriteRepository = FavoriteRepository(AppDatabase.getDatabase(application))
+
+    private val cocktails = repositoryCocktail.cocktails
+    val cocktailsAndFavorites = repositoryCocktail.cocktailsAndFavorites
+    val categories = repositoryCategory.categories
+
     private val _cocktail = MutableLiveData<Cocktail>()
     val cocktail: LiveData<Cocktail> get() = _cocktail
 
-    private val _cocktailList = MutableLiveData<List<Cocktail>>()
-    val cocktailList: LiveData<List<Cocktail>> get() = _cocktailList
-
-    private val repositoryCategory = CategoryRepository(AppDatabase.getDatabase(application))
-    val categories = repositoryCategory.categories
+    private val _cocktailList = MutableLiveData<List<CocktailsAndFavorites>>()
+    val cocktailList: LiveData<List<CocktailsAndFavorites>> get() = _cocktailList
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
@@ -40,13 +49,15 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
 
     private fun getCocktails() {
         viewModelScope.launch {
-            try {
-                repositoryCocktail.refreshCocktails()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-            } catch (networkError: IOException) {
-                if (cocktails.value.isNullOrEmpty()) {
-                    _eventNetworkError.value = true
+            if (cocktails.value.isNullOrEmpty()) {
+                try {
+                    repositoryCocktail.refreshCocktails()
+                    _eventNetworkError.value = false
+                    _isNetworkErrorShown.value = false
+                } catch (networkError: IOException) {
+                    if (cocktails.value.isNullOrEmpty()) {
+                        _eventNetworkError.value = true
+                    }
                 }
             }
         }
@@ -58,7 +69,7 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun getCocktailById(id: Int) {
+    fun getCocktailById(id: String) {
         val drinkLiveData = repositoryCocktail.getCocktail(id)
         drinkLiveData.observeForever { drink ->
             _cocktail.value = drink
@@ -72,16 +83,33 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun getCocktailsByFavorite(isFavorite: Boolean) {
-        val drinkLiveData = repositoryCocktail.getCocktailsByFavorite(isFavorite)
+    fun getCocktailsByFavorite() {
+        val drinkLiveData = repositoryCocktail.getCocktailsByFavorite()
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
         }
     }
 
-    fun setFavoriteCocktail(isFavorite: Boolean, id: Int) {
+    fun setFavoriteCocktail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            repositoryCocktail.updateCocktailByFavorite(isFavorite, id)
+            favoriteRepository.insertFavorite(id)
+        }
+    }
+
+    fun isFavoriteCocktail(id: String): LiveData<Boolean> {
+        val resultLiveData = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            val isFavorite = withContext(Dispatchers.IO) {
+                favoriteRepository.isFavoriteById(id)
+            }
+            resultLiveData.value = isFavorite
+        }
+        return resultLiveData
+    }
+
+    fun deleteFavorite(id: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            favoriteRepository.deleteFavorite(id)
         }
     }
 
