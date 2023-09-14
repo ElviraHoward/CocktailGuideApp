@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
-import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
@@ -24,7 +23,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     private val binding get() = _binding!!
 
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,24 +43,22 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvCocktails.adapter = cocktailsAdapter
-        binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
-
-        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner, Observer<List<CocktailsAndFavorites>> { cocktail ->
-            cocktail?.apply {
-                cocktailsAdapter.setData(cocktail)
+        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner, Observer<List<CocktailsAndFavorites>> { cocktails ->
+            cocktails?.apply {
+                val cocktailsAdapter = CocktailsAdapter(cocktails)
+                binding.rvCocktails.adapter = cocktailsAdapter
+                binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
+                cocktailsAdapter.onItemClick {
+                    val bundle = Bundle().apply {
+                        putString("idDrink", it)
+                    }
+                    findNavController().navigate(
+                        R.id.action_cocktailsFragment_to_cocktailDetailFragment,
+                        bundle
+                    )
+                }
             }
         })
-
-        cocktailsAdapter.onItemClick {
-            val bundle = Bundle().apply {
-                putString("idDrink", it)
-            }
-            findNavController().navigate(
-                R.id.action_cocktailsFragment_to_cocktailDetailFragment,
-                bundle
-            )
-        }
     }
 
     private fun onNetworkError() {
@@ -80,5 +76,10 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

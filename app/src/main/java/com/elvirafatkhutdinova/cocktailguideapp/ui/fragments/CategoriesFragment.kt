@@ -43,7 +43,10 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                     findNavController().navigate(R.id.action_categoriesFragment_to_cocktailsByCategoryFragment, bundle) }
             }
         }
+    }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

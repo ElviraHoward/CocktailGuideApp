@@ -96,4 +96,9 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

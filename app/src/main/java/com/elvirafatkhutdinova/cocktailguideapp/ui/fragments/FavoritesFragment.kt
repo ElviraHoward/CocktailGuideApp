@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.FOCUS_DOWN
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentFavoritesBinding
@@ -23,7 +24,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding get() = _binding!!
 
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,23 +37,26 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvFavoriteCocktails.adapter = cocktailsAdapter
-        binding.rvFavoriteCocktails.layoutManager = GridLayoutManager(activity, 2)
-
         viewModel.getCocktailsByFavorite()
         viewModel.cocktailList.observe(viewLifecycleOwner) {
-            cocktailsAdapter.setData(it)
-        }
-
-        cocktailsAdapter.onItemClick {
-            val bundle = Bundle().apply {
-                putString("idDrink", it)
+            val cocktailsAdapter = CocktailsAdapter(it)
+            binding.rvFavoriteCocktails.adapter = cocktailsAdapter
+            binding.rvFavoriteCocktails.layoutManager = GridLayoutManager(activity, 2)
+            cocktailsAdapter.onItemClick {
+                val bundle = Bundle().apply {
+                    putString("idDrink", it)
+                }
+                findNavController().navigate(
+                    R.id.action_favoritesFragment_to_cocktailDetailFragment,
+                    bundle
+                )
             }
-            findNavController().navigate(
-                R.id.action_favoritesFragment_to_cocktailDetailFragment,
-                bundle
-            )
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

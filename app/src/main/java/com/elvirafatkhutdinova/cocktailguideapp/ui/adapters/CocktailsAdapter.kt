@@ -9,10 +9,10 @@ import com.elvirafatkhutdinova.cocktailguideapp.databinding.CocktailItemBinding
 import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.OnItemClickListener
 
-class CocktailsAdapter : RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolder>(),
+class CocktailsAdapter(private val cocktailsAndFavorites: List<CocktailsAndFavorites>) :
+    RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHolder>(),
     OnItemClickListener<(String) -> Unit> {
 
-    private var cocktailsList = emptyList<CocktailsAndFavorites>()
     private var onItemClickListener: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailsViewHolder {
@@ -25,13 +25,13 @@ class CocktailsAdapter : RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHold
     }
 
     override fun getItemCount(): Int {
-        return cocktailsList.size
+        return cocktailsAndFavorites.size
     }
 
     override fun onBindViewHolder(holder: CocktailsViewHolder, position: Int) {
         with(holder) {
-            val cocktail = cocktailsList[position].cocktail
-            val favorite = cocktailsList[position].favorite
+            val cocktail = cocktailsAndFavorites[position].cocktail
+            val favorite = cocktailsAndFavorites[position].favorite
             holder.itemView.apply {
                 binding.textCocktail.text = cocktail.strDrink
                 Glide.with(this).load(cocktail.strDrinkThumb).into(binding.imgCocktail)
@@ -46,11 +46,6 @@ class CocktailsAdapter : RecyclerView.Adapter<CocktailsAdapter.CocktailsViewHold
                 )
             }
         }
-    }
-
-    fun setData(newCocktailsList: List<CocktailsAndFavorites>) {
-        cocktailsList = newCocktailsList
-        notifyDataSetChanged()
     }
 
     inner class CocktailsViewHolder(val binding: CocktailItemBinding) :

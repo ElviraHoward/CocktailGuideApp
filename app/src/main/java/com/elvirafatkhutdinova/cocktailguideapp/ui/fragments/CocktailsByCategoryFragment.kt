@@ -21,7 +21,6 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
     private var _binding: FragmentCocktailsByCategoryBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val cocktailsAdapter by lazy { CocktailsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +33,6 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvCocktailsByCategory.adapter = cocktailsAdapter
-        binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
-
         val category = arguments?.getString("category") ?: ""
         (activity as AppCompatActivity).supportActionBar?.title= category
 
@@ -47,19 +43,25 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
         viewModel.getCocktailsByCategory(category)
         viewModel.cocktailList.observe(viewLifecycleOwner) {
             if (category.isNotEmpty()) {
-                cocktailsAdapter.setData(it)
-            }
-        }
+                val cocktailsAdapter = CocktailsAdapter(it)
+                binding.rvCocktailsByCategory.adapter = cocktailsAdapter
+                binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
 
-        cocktailsAdapter.onItemClick {
-            val bundle = Bundle().apply {
-                putString("idDrink", it)
+                cocktailsAdapter.onItemClick {
+                    val bundle = Bundle().apply {
+                        putString("idDrink", it)
+                    }
+                    findNavController().navigate(
+                        R.id.action_cocktailsByCategoryFragment_to_cocktailDetailFragment,
+                        bundle
+                    )
+                }
             }
-            findNavController().navigate(
-                R.id.action_cocktailsByCategoryFragment_to_cocktailDetailFragment,
-                bundle
-            )
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.IngredientItemBinding
 
-class RecipeAdapter(private val recipeList: List<Pair<String?, String?>>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter(private val recipeList: List<Pair<String?, String?>>) :
+    RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val itemBinding = IngredientItemBinding.inflate(
@@ -30,5 +31,6 @@ class RecipeAdapter(private val recipeList: List<Pair<String?, String?>>) : Recy
         }
     }
 
-    inner class RecipeViewHolder(val binding: IngredientItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class RecipeViewHolder(val binding: IngredientItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

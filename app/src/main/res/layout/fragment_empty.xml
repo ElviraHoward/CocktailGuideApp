@@ -4,9 +4,19 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_empty"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_empty_page"
         android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_empty"
+        android:layout_marginTop="15dp"
+        android:text="Empty data"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"/>
 
 </RelativeLayout>
