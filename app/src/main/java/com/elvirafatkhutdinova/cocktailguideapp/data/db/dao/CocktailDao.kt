@@ -1,9 +1,9 @@
-package com.elvirafatkhutdinova.cocktailguideapp.data.dao
+package com.elvirafatkhutdinova.cocktailguideapp.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailEntity
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailsAndFavoritesEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CocktailEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CocktailsAndFavoritesEntity
 
 @Dao
 interface CocktailDao {

@@ -2,16 +2,17 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
     namespace 'com.elvirafatkhutdinova.cocktailguideapp'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.elvirafatkhutdinova.cocktailguideapp"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -71,8 +72,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     // Navigation Components
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.2"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'

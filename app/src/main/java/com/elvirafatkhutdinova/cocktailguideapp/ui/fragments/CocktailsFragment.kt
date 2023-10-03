@@ -8,12 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
-import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
@@ -28,14 +26,12 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCocktailsBinding.inflate(layoutInflater, container, false)
 
-        viewModel.eventNetworkError.observe(
-            viewLifecycleOwner,
-            Observer<Boolean> { isNetworkError ->
-                if (isNetworkError) onNetworkError()
-            })
+        viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        }
 
         return binding.root
     }
@@ -43,27 +39,25 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner, Observer<List<CocktailsAndFavorites>> { cocktails ->
+        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner) { cocktails ->
             cocktails?.apply {
                 val cocktailsAdapter = CocktailsAdapter(cocktails)
                 binding.rvCocktails.adapter = cocktailsAdapter
                 binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
                 cocktailsAdapter.onItemClick {
-                    val bundle = Bundle().apply {
-                        putString("idDrink", it)
-                    }
                     findNavController().navigate(
-                        R.id.action_cocktailsFragment_to_cocktailDetailFragment,
-                        bundle
+                        CocktailsFragmentDirections.actionCocktailListToCocktailDetail(
+                            it
+                        )
                     )
                 }
             }
-        })
+        }
     }
 
     private fun onNetworkError() {
         if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, R.string.network_error, Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
     }

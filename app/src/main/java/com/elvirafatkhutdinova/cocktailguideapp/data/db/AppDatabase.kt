@@ -1,15 +1,15 @@
-package com.elvirafatkhutdinova.cocktailguideapp.data
+package com.elvirafatkhutdinova.cocktailguideapp.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.dao.CategoryDao
-import com.elvirafatkhutdinova.cocktailguideapp.data.dao.CocktailDao
-import com.elvirafatkhutdinova.cocktailguideapp.data.dao.FavoriteDao
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.CategoryEntity
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.CocktailEntity
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.FavoriteEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.CategoryDao
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.CocktailDao
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.FavoriteDao
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CategoryEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CocktailEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.FavoriteEntity
 
 @Database(
     entities = [CocktailEntity::class, CategoryEntity::class, FavoriteEntity::class],

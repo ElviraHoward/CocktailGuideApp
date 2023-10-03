@@ -17,13 +17,14 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     private var _binding : FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel : CocktailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCategoriesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -37,10 +38,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 binding.rvCategories.adapter = categoriesAdapter
                 binding.rvCategories.layoutManager = LinearLayoutManager(activity)
                 categoriesAdapter.onItemClick {
-                    val bundle = Bundle().apply {
-                        putString("category", it)
-                    }
-                    findNavController().navigate(R.id.action_categoriesFragment_to_cocktailsByCategoryFragment, bundle) }
+                    findNavController().navigate(CategoriesFragmentDirections.actionCategoryListToCocktailListByCategory(it)) }
             }
         }
     }

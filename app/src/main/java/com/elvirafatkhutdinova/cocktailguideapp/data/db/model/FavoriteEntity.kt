@@ -1,7 +1,9 @@
-package com.elvirafatkhutdinova.cocktailguideapp.data.model
+package com.elvirafatkhutdinova.cocktailguideapp.data.db.model
 
-import androidx.room.*
-import com.elvirafatkhutdinova.cocktailguideapp.domain.Favorite
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "favorite", foreignKeys = [ForeignKey(
@@ -16,10 +18,3 @@ data class FavoriteEntity(
     @ColumnInfo(name = "id_favorite")
     val idFavorite: String
 )
-
-fun FavoriteEntity.asDomainModel(): Favorite {
-    return Favorite(
-        id = this.id,
-        idFavorite = this.idFavorite
-    )
-}

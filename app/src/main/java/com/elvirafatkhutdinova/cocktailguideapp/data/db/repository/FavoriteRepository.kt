@@ -1,7 +1,7 @@
-package com.elvirafatkhutdinova.cocktailguideapp.data.repository
+package com.elvirafatkhutdinova.cocktailguideapp.data.db.repository
 
-import com.elvirafatkhutdinova.cocktailguideapp.data.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.FavoriteEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.FavoriteEntity
 
 class FavoriteRepository(private val database: AppDatabase) {
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/categories"
+    app:startDestination="@id/categoryList">
+    <fragment
+        android:id="@+id/categoryList"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CategoriesFragment"
+        android:label="@string/categories_tab"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoryList_to_cocktailListByCategory"
+            app:destination="@id/cocktailListByCategory" />
+    </fragment>
+    <fragment
+        android:id="@+id/cocktailListByCategory"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailsByCategoryFragment"
+        tools:layout="@layout/fragment_cocktails_by_category"
+        android:label="{category}">
+        <action
+            android:id="@+id/action_cocktailListByCategory_to_cocktailDetailFromFragment"
+            app:destination="@id/cocktailDetailFromFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/cocktailDetailFromFragment"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailDetailFragment"
+        tools:layout="@layout/fragment_cocktail_detail">
+        <argument
+            android:name="idCocktail"
+            app:argType="string" />
+    </fragment>
+</navigation>

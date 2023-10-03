@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.network
+package com.elvirafatkhutdinova.cocktailguideapp.data.network
 
 import com.elvirafatkhutdinova.cocktailguideapp.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit

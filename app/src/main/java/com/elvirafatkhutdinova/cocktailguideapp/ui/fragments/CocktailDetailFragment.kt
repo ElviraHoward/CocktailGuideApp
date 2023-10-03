@@ -10,6 +10,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.R
@@ -22,13 +23,13 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
     private var _binding: FragmentCocktailDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val idDrink by lazy { arguments?.getString("idDrink") ?: "" }
+    private val args by navArgs<CocktailDetailFragmentArgs>()
     private var isAdded: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCocktailDetailBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -36,7 +37,8 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCocktailById(idDrink)
+        viewModel.getCocktailById(args.idCocktail)
+
         viewModel.cocktail.observe(viewLifecycleOwner) {
             binding.drinkName.text = it.strDrink
             binding.categoryCocktail.text = it.strCategory
@@ -48,7 +50,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
             binding.ingredientsList.adapter = recipeAdapter
             binding.ingredientsList.layoutManager = LinearLayoutManager(activity)
         }
-        viewModel.isFavoriteCocktail(idDrink).observe(viewLifecycleOwner) {
+        viewModel.isFavoriteCocktail(args.idCocktail).observe(viewLifecycleOwner) {
             isAdded = it
             setupMenu()
         }
@@ -66,7 +68,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
                     R.id.action_favorite -> {
                         isAdded = !isAdded
                         menuItem.icon = setActionButtonIcon()
-                        if (isAdded) viewModel.setFavoriteCocktail(idDrink) else viewModel.deleteFavorite(idDrink)
+                        if (isAdded) viewModel.setFavoriteCocktail(args.idCocktail) else viewModel.deleteFavorite(args.idCocktail)
                         true
                     }
                     else -> false

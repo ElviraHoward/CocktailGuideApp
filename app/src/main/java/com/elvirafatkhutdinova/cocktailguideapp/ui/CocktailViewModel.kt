@@ -5,10 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CategoryRepository
-import com.elvirafatkhutdinova.cocktailguideapp.data.repository.CocktailRepository
-import com.elvirafatkhutdinova.cocktailguideapp.data.repository.FavoriteRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CategoryRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepository
 import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
 import kotlinx.coroutines.CoroutineScope

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favorites"
+    app:startDestination="@id/favoriteList">
+
+    <fragment
+        android:id="@+id/favoriteList"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.FavoritesFragment"
+        android:label="@string/favorites_tab"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoriteList_to_cocktailDetailFromFavorites"
+            app:destination="@id/cocktailDetailFromFavorites" />
+    </fragment>
+    <fragment
+        android:id="@+id/cocktailDetailFromFavorites"
+        android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.CocktailDetailFragment"
+        tools:layout="@layout/fragment_cocktail_detail">
+        <argument
+            android:name="idCocktail"
+            app:argType="string" />
+    </fragment>
+</navigation>

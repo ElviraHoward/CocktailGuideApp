@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.FOCUS_DOWN
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentFavoritesBinding
-import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 
@@ -29,7 +24,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -38,18 +33,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCocktailsByFavorite()
-        viewModel.cocktailList.observe(viewLifecycleOwner) {
-            val cocktailsAdapter = CocktailsAdapter(it)
+
+        viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
+            val cocktailsAdapter = CocktailsAdapter(cocktailsAndFavorites)
             binding.rvFavoriteCocktails.adapter = cocktailsAdapter
             binding.rvFavoriteCocktails.layoutManager = GridLayoutManager(activity, 2)
             cocktailsAdapter.onItemClick {
-                val bundle = Bundle().apply {
-                    putString("idDrink", it)
-                }
-                findNavController().navigate(
-                    R.id.action_favoritesFragment_to_cocktailDetailFragment,
-                    bundle
-                )
+                findNavController().navigate(FavoritesFragmentDirections.actionFavoriteListToCocktailDetailFromFavorites(it))
             }
         }
     }
