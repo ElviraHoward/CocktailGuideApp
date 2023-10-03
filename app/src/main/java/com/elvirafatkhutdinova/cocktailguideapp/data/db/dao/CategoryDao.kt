@@ -1,11 +1,11 @@
-package com.elvirafatkhutdinova.cocktailguideapp.data.dao
+package com.elvirafatkhutdinova.cocktailguideapp.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.elvirafatkhutdinova.cocktailguideapp.data.model.CategoryEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CategoryEntity
 
 @Dao
 interface CategoryDao {

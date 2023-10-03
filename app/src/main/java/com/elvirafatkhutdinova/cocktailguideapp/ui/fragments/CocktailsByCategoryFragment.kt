@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsByCategoryBinding
@@ -21,12 +22,12 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
     private var _binding: FragmentCocktailsByCategoryBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CocktailViewModel by activityViewModels()
-    private val cocktailsAdapter by lazy { CocktailsAdapter() }
+    private val args by navArgs<CocktailsByCategoryFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCocktailsByCategoryBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -34,32 +35,31 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvCocktailsByCategory.adapter = cocktailsAdapter
-        binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
+        setupBackArrow()
 
-        val category = arguments?.getString("category") ?: ""
-        (activity as AppCompatActivity).supportActionBar?.title= category
+        viewModel.getCocktailsByCategory(args.category)
 
-        val upArrow = ContextCompat.getDrawable(activity as AppCompatActivity, R.drawable.ic_arrow_back)
-        upArrow?.setColorFilter(ContextCompat.getColor(activity as AppCompatActivity, R.color.black_text), PorterDuff.Mode.SRC_ATOP)
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(upArrow)
+        viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
+            if (args.category.isNotEmpty()) {
+                val cocktailsAdapter = CocktailsAdapter(cocktailsAndFavorites)
+                binding.rvCocktailsByCategory.adapter = cocktailsAdapter
+                binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
 
-        viewModel.getCocktailsByCategory(category)
-        viewModel.cocktailList.observe(viewLifecycleOwner) {
-            if (category.isNotEmpty()) {
-                cocktailsAdapter.setData(it)
+                cocktailsAdapter.onItemClick {
+                    findNavController().navigate(CocktailsByCategoryFragmentDirections.actionCocktailListByCategoryToCocktailDetailFromFragment(it))
+                }
             }
-        }
-
-        cocktailsAdapter.onItemClick {
-            val bundle = Bundle().apply {
-                putInt("idDrink", it)
-            }
-            findNavController().navigate(
-                R.id.action_cocktailsByCategoryFragment_to_cocktailDetailFragment,
-                bundle
-            )
         }
     }
 
+    private fun setupBackArrow() {
+        val upArrow = ContextCompat.getDrawable(activity as AppCompatActivity, R.drawable.ic_arrow_back)
+        upArrow?.setColorFilter(ContextCompat.getColor(activity as AppCompatActivity, R.color.black_text), PorterDuff.Mode.SRC_ATOP)
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(upArrow)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

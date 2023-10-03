@@ -1,6 +1,5 @@
 package com.elvirafatkhutdinova.cocktailguideapp.domain
 
-
 data class Cocktail(
     val idDrink: String,
     val strAlcoholic: String?,
@@ -38,8 +37,7 @@ data class Cocktail(
     val strMeasure12: String?,
     val strMeasure13: String?,
     val strMeasure14: String?,
-    val strMeasure15: String?,
-    val isFavorite: Boolean?
+    val strMeasure15: String?
 ) {
     fun getIngredientMeasures(): List<Pair<String?, String?>> {
         return listOfNotNull(

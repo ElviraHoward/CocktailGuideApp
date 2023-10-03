@@ -1,4 +1,4 @@
-package com.elvirafatkhutdinova.cocktailguideapp.network.model
+package com.elvirafatkhutdinova.cocktailguideapp.data.network.model
 
 data class CocktailResponse(
     val dateModified: String,
