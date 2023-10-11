@@ -5,20 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentFavoritesBinding
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CocktailViewModel by activityViewModels()
+    private val viewModel: CocktailViewModel by viewModels { ViewModelFactory(requireActivity().application) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

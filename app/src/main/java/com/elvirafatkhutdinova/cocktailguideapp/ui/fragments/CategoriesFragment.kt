@@ -5,20 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCategoriesBinding
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CategoriesAdapter
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CategoryViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
-    private var _binding : FragmentCategoriesBinding? = null
+    private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : CocktailViewModel by activityViewModels()
+    private val viewModel: CategoryViewModel by viewModels { ViewModelFactory(requireActivity().application) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,12 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 binding.rvCategories.adapter = categoriesAdapter
                 binding.rvCategories.layoutManager = LinearLayoutManager(activity)
                 categoriesAdapter.onItemClick {
-                    findNavController().navigate(CategoriesFragmentDirections.actionCategoryListToCocktailListByCategory(it)) }
+                    findNavController().navigate(
+                        CategoriesFragmentDirections.actionCategoryListToCocktailListByCategory(
+                            it
+                        )
+                    )
+                }
             }
         }
     }

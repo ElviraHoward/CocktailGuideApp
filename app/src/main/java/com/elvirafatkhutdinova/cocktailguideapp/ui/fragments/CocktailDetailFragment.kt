@@ -1,5 +1,7 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
@@ -8,21 +10,25 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailDetailBinding
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.RecipeAdapter
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.FavoriteViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
 
 class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
 
     private var _binding: FragmentCocktailDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CocktailViewModel by activityViewModels()
+    private val cocktailViewModel: CocktailViewModel by viewModels { ViewModelFactory(requireActivity().application) }
+    private val favoriteViewModel: FavoriteViewModel by viewModels { ViewModelFactory(requireActivity().application) }
     private val args by navArgs<CocktailDetailFragmentArgs>()
     private var isAdded: Boolean = false
 
@@ -31,15 +37,22 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCocktailDetailBinding.inflate(layoutInflater, container, false)
+
+        (activity as CocktailsActivity).supportActionBar?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            elevation = 5f
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCocktailById(args.idCocktail)
+        setUpArrow()
 
-        viewModel.cocktail.observe(viewLifecycleOwner) {
+        cocktailViewModel.getCocktailById(args.idCocktail)
+
+        cocktailViewModel.cocktail.observe(viewLifecycleOwner) {
             binding.drinkName.text = it.strDrink
             binding.categoryCocktail.text = it.strCategory
             binding.glassCocktail.text = it.strGlass
@@ -50,7 +63,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
             binding.ingredientsList.adapter = recipeAdapter
             binding.ingredientsList.layoutManager = LinearLayoutManager(activity)
         }
-        viewModel.isFavoriteCocktail(args.idCocktail).observe(viewLifecycleOwner) {
+        favoriteViewModel.isFavoriteCocktail(args.idCocktail).observe(viewLifecycleOwner) {
             isAdded = it
             setupMenu()
         }
@@ -68,7 +81,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
                     R.id.action_favorite -> {
                         isAdded = !isAdded
                         menuItem.icon = setActionButtonIcon()
-                        if (isAdded) viewModel.setFavoriteCocktail(args.idCocktail) else viewModel.deleteFavorite(args.idCocktail)
+                        if (isAdded) favoriteViewModel.setFavoriteCocktail(args.idCocktail) else favoriteViewModel.deleteFavorite(args.idCocktail)
                         true
                     }
                     else -> false
@@ -87,6 +100,11 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
             requireActivity(),
             if (isAdded) R.drawable.ic_added_favorite else R.drawable.ic_add_to_favorites
         )
+    }
+
+    private fun setUpArrow() {
+        val upArrow = ContextCompat.getDrawable(activity as AppCompatActivity, R.drawable.ic_arrow_white)
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(upArrow)
     }
 
     override fun onResume() {

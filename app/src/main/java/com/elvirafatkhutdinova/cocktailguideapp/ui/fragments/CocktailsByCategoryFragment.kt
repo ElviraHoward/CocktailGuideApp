@@ -1,27 +1,25 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
-import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsByCategoryBinding
-import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailViewModel
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
 
 class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_category) {
 
     private var _binding: FragmentCocktailsByCategoryBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CocktailViewModel by activityViewModels()
+    private val viewModel: CocktailViewModel by viewModels { ViewModelFactory(requireActivity().application) }
     private val args by navArgs<CocktailsByCategoryFragmentArgs>()
 
     override fun onCreateView(
@@ -34,8 +32,6 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupBackArrow()
 
         viewModel.getCocktailsByCategory(args.category)
 
@@ -50,12 +46,6 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
                 }
             }
         }
-    }
-
-    private fun setupBackArrow() {
-        val upArrow = ContextCompat.getDrawable(activity as AppCompatActivity, R.drawable.ic_arrow_back)
-        upArrow?.setColorFilter(ContextCompat.getColor(activity as AppCompatActivity, R.color.black_text), PorterDuff.Mode.SRC_ATOP)
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(upArrow)
     }
 
     override fun onDestroy() {

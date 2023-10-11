@@ -3,27 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.CocktailsFragment">
+    tools:context=".ui.fragments.CocktailsFragment"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_greetings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose cocktail for the evening!"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black_text"
-            android:layout_margin="10dp"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cocktails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/text_greetings" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 

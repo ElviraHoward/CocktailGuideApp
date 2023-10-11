@@ -25,7 +25,6 @@
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.elvirafatkhutdinova.cocktailguideapp.ui.fragments.OnBoardingFragment"
-        android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
             android:id="@+id/action_onBoardingFragment_to_cocktailList"

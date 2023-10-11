@@ -1,31 +1,23 @@
-package com.elvirafatkhutdinova.cocktailguideapp.ui
+package com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CategoryRepository
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepository
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepository
 import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class CocktailViewModel(application: Application) : AndroidViewModel(application) {
+class CocktailViewModel(application: Application) : ViewModel() {
 
     private val repositoryCocktail = CocktailRepository(AppDatabase.getDatabase(application))
-    private val repositoryCategory = CategoryRepository(AppDatabase.getDatabase(application))
-    private val favoriteRepository = FavoriteRepository(AppDatabase.getDatabase(application))
 
     private val cocktails = repositoryCocktail.cocktails
     val cocktailsAndFavorites = repositoryCocktail.cocktailsAndFavorites
-    val categories = repositoryCategory.categories
 
     private val _cocktail = MutableLiveData<Cocktail>()
     val cocktail: LiveData<Cocktail> get() = _cocktail
@@ -44,7 +36,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
 
     init {
         getCocktails()
-        getCategories()
     }
 
     private fun getCocktails() {
@@ -60,12 +51,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }
-        }
-    }
-
-    private fun getCategories() {
-        viewModelScope.launch {
-            repositoryCategory.refreshCategories()
         }
     }
 
@@ -87,29 +72,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         val drinkLiveData = repositoryCocktail.getCocktailsByFavorite()
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
-        }
-    }
-
-    fun setFavoriteCocktail(id: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            favoriteRepository.insertFavorite(id)
-        }
-    }
-
-    fun isFavoriteCocktail(id: String): LiveData<Boolean> {
-        val resultLiveData = MutableLiveData<Boolean>()
-        viewModelScope.launch {
-            val isFavorite = withContext(Dispatchers.IO) {
-                favoriteRepository.isFavoriteById(id)
-            }
-            resultLiveData.value = isFavorite
-        }
-        return resultLiveData
-    }
-
-    fun deleteFavorite(id: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            favoriteRepository.deleteFavorite(id)
         }
     }
 

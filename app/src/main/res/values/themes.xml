@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CocktailGuideApp" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.CocktailGuideApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/dark_green</item>
@@ -9,12 +9,16 @@
         <item name="colorSecondary">@color/blue_grey</item>
         <item name="colorSecondaryVariant">@color/light_grey</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">
+            true
+        </item>
+<!--        &lt;!&ndash; Status bar color. &ndash;&gt;
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
         <item name="windowActionBarOverlay">true</item>
         <item name="titleTextColor">@color/black_text</item>
-        <item name="colorControlNormal">@color/black_text</item>
+        <item name="colorControlNormal">@color/black_text</item>-->
     </style>
 
 </resources>
