@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepository
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 class FavoriteViewModel(application: Application) : ViewModel() {
 
-    private val favoriteRepository = FavoriteRepository(AppDatabase.getDatabase(application))
+    private val favoriteRepository = FavoriteRepositoryImpl(application)
 
     fun setFavoriteCocktail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {

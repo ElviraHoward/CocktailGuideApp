@@ -5,19 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepository
-import com.elvirafatkhutdinova.cocktailguideapp.domain.Cocktail
-import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepositoryImpl
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 class CocktailViewModel(application: Application) : ViewModel() {
 
-    private val repositoryCocktail = CocktailRepository(AppDatabase.getDatabase(application))
+    private val repositoryCocktail = CocktailRepositoryImpl(application)
 
-    private val cocktails = repositoryCocktail.cocktails
-    val cocktailsAndFavorites = repositoryCocktail.cocktailsAndFavorites
+    private val cocktails = repositoryCocktail.getCocktailList()
+    val cocktailsAndFavorites = repositoryCocktail.getCocktailAndFavoriteList()
 
     private val _cocktail = MutableLiveData<Cocktail>()
     val cocktail: LiveData<Cocktail> get() = _cocktail
@@ -42,7 +41,7 @@ class CocktailViewModel(application: Application) : ViewModel() {
         viewModelScope.launch {
             if (cocktails.value.isNullOrEmpty()) {
                 try {
-                    repositoryCocktail.refreshCocktails()
+                    repositoryCocktail.loadData()
                     _eventNetworkError.value = false
                     _isNetworkErrorShown.value = false
                 } catch (networkError: IOException) {
@@ -55,14 +54,14 @@ class CocktailViewModel(application: Application) : ViewModel() {
     }
 
     fun getCocktailById(id: String) {
-        val drinkLiveData = repositoryCocktail.getCocktail(id)
+        val drinkLiveData = repositoryCocktail.getCocktailById(id)
         drinkLiveData.observeForever { drink ->
             _cocktail.value = drink
         }
     }
 
     fun getCocktailsByCategory(category: String) {
-        val drinkLiveData = repositoryCocktail.getCocktailsByCategory(category)
+        val drinkLiveData = repositoryCocktail.getCocktailsAndFavoritesByCategory(category)
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
         }

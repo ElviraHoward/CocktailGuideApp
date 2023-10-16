@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.CocktailItemBinding
-import com.elvirafatkhutdinova.cocktailguideapp.domain.CocktailsAndFavorites
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.OnItemClickListener
 
 class CocktailsAdapter(private val cocktailsAndFavorites: List<CocktailsAndFavorites>) :

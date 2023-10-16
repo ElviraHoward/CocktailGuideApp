@@ -18,7 +18,7 @@ import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.FavoriteEntity
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun drinkDao(): CocktailDao
+    abstract fun cocktailDao(): CocktailDao
     abstract fun categoryDao(): CategoryDao
 
     abstract fun favoritesDao(): FavoriteDao
