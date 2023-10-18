@@ -1,6 +1,7 @@
 package com.elvirafatkhutdinova.cocktailguideapp.data.db.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.elvirafatkhutdinova.cocktailguideapp.data.asDatabaseModel

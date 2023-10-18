@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepositoryImpl
+import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.DeleteFavoriteUseCase
+import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.InsertFavoriteUseCase
+import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.IsFavoriteByIdUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,9 +18,13 @@ class FavoriteViewModel(application: Application) : ViewModel() {
 
     private val favoriteRepository = FavoriteRepositoryImpl(application)
 
+    private val insertFavoriteUseCase = InsertFavoriteUseCase(favoriteRepository)
+    private val isFavoriteByIdUseCase = IsFavoriteByIdUseCase(favoriteRepository)
+    private val deleteFavoriteUseCase = DeleteFavoriteUseCase(favoriteRepository)
+
     fun setFavoriteCocktail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            favoriteRepository.insertFavorite(id)
+            insertFavoriteUseCase.invoke(id)
         }
     }
 
@@ -25,7 +32,7 @@ class FavoriteViewModel(application: Application) : ViewModel() {
         val resultLiveData = MutableLiveData<Boolean>()
         viewModelScope.launch {
             val isFavorite = withContext(Dispatchers.IO) {
-                favoriteRepository.isFavoriteById(id)
+                isFavoriteByIdUseCase.invoke(id)
             }
             resultLiveData.value = isFavorite
         }
@@ -34,7 +41,7 @@ class FavoriteViewModel(application: Application) : ViewModel() {
 
     fun deleteFavorite(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            favoriteRepository.deleteFavorite(id)
+            deleteFavoriteUseCase.invoke(id)
         }
     }
 }

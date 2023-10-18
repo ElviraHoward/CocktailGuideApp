@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepositoryImpl
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
+import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.*
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -15,8 +16,14 @@ class CocktailViewModel(application: Application) : ViewModel() {
 
     private val repositoryCocktail = CocktailRepositoryImpl(application)
 
-    private val cocktails = repositoryCocktail.getCocktailList()
-    val cocktailsAndFavorites = repositoryCocktail.getCocktailAndFavoriteList()
+    private val getCocktailListUseCase = GetCocktailListUseCase(repositoryCocktail)
+    private val getCocktailAndFavoriteListUseCase = GetCocktailAndFavoriteListUseCase(repositoryCocktail)
+    private val getCocktailByIdUseCase = GetCocktailByIdUseCase(repositoryCocktail)
+    private val getCocktailsAndFavoritesByCategoryUseCase = GetCocktailsAndFavoritesByCategoryUseCase(repositoryCocktail)
+    private val getCocktailsByFavoriteUseCase = GetCocktailsByFavoriteUseCase(repositoryCocktail)
+    private val loadCocktailsUseCase = LoadCocktailsUseCase(repositoryCocktail)
+
+    val cocktailsAndFavorites = getCocktailAndFavoriteListUseCase.invoke()
 
     private val _cocktail = MutableLiveData<Cocktail>()
     val cocktail: LiveData<Cocktail> get() = _cocktail
@@ -39,13 +46,13 @@ class CocktailViewModel(application: Application) : ViewModel() {
 
     private fun getCocktails() {
         viewModelScope.launch {
-            if (cocktails.value.isNullOrEmpty()) {
+            if (getCocktailListUseCase.invoke().value.isNullOrEmpty()) {
                 try {
-                    repositoryCocktail.loadData()
+                    loadCocktailsUseCase.invoke()
                     _eventNetworkError.value = false
                     _isNetworkErrorShown.value = false
                 } catch (networkError: IOException) {
-                    if (cocktails.value.isNullOrEmpty()) {
+                    if (getCocktailListUseCase.invoke().value.isNullOrEmpty()) {
                         _eventNetworkError.value = true
                     }
                 }
@@ -54,21 +61,21 @@ class CocktailViewModel(application: Application) : ViewModel() {
     }
 
     fun getCocktailById(id: String) {
-        val drinkLiveData = repositoryCocktail.getCocktailById(id)
+        val drinkLiveData = getCocktailByIdUseCase.invoke(id)
         drinkLiveData.observeForever { drink ->
             _cocktail.value = drink
         }
     }
 
     fun getCocktailsByCategory(category: String) {
-        val drinkLiveData = repositoryCocktail.getCocktailsAndFavoritesByCategory(category)
+        val drinkLiveData = getCocktailsAndFavoritesByCategoryUseCase.invoke(category)
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
         }
     }
 
     fun getCocktailsByFavorite() {
-        val drinkLiveData = repositoryCocktail.getCocktailsByFavorite()
+        val drinkLiveData = getCocktailsByFavoriteUseCase.invoke()
         drinkLiveData.observeForever { drinks ->
             _cocktailList.value = drinks
         }
