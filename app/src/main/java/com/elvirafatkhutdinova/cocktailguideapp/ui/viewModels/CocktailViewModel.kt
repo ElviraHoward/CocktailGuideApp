@@ -1,27 +1,24 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.CocktailRepositoryImpl
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.*
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class CocktailViewModel(application: Application) : ViewModel() {
-
-    private val repositoryCocktail = CocktailRepositoryImpl(application)
-
-    private val getCocktailListUseCase = GetCocktailListUseCase(repositoryCocktail)
-    private val getCocktailAndFavoriteListUseCase = GetCocktailAndFavoriteListUseCase(repositoryCocktail)
-    private val getCocktailByIdUseCase = GetCocktailByIdUseCase(repositoryCocktail)
-    private val getCocktailsAndFavoritesByCategoryUseCase = GetCocktailsAndFavoritesByCategoryUseCase(repositoryCocktail)
-    private val getCocktailsByFavoriteUseCase = GetCocktailsByFavoriteUseCase(repositoryCocktail)
-    private val loadCocktailsUseCase = LoadCocktailsUseCase(repositoryCocktail)
+class CocktailViewModel @Inject constructor(
+    private val getCocktailListUseCase: GetCocktailListUseCase,
+    private val getCocktailAndFavoriteListUseCase: GetCocktailAndFavoriteListUseCase,
+    private val getCocktailByIdUseCase: GetCocktailByIdUseCase,
+    private val getCocktailsAndFavoritesByCategoryUseCase: GetCocktailsAndFavoritesByCategoryUseCase,
+    private val getCocktailsByFavoriteUseCase: GetCocktailsByFavoriteUseCase,
+    private val loadCocktailsUseCase: LoadCocktailsUseCase
+) : ViewModel() {
 
     val cocktailsAndFavorites = getCocktailAndFavoriteListUseCase.invoke()
 

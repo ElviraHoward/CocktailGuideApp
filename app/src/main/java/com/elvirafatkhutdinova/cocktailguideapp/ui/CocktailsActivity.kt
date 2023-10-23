@@ -1,9 +1,6 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -13,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.elvirafatkhutdinova.cocktailguideapp.CocktailGuideApplication
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.ActivityCocktailsBinding
 
@@ -23,8 +21,14 @@ class CocktailsActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    private val component by lazy {
+        (application as CocktailGuideApplication).applicationComponent
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        component.inject(this)
 
         _binding = ActivityCocktailsBinding.inflate(layoutInflater)
         val view = binding.root

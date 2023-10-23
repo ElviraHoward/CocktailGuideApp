@@ -1,8 +1,9 @@
 package com.elvirafatkhutdinova.cocktailguideapp.domain.usecase
 
 import com.elvirafatkhutdinova.cocktailguideapp.domain.repository.CocktailRepository
+import javax.inject.Inject
 
-class LoadCocktailsUseCase(private val repository: CocktailRepository) {
+class LoadCocktailsUseCase @Inject constructor(private val repository: CocktailRepository) {
 
     suspend operator fun invoke() = repository.loadData()
 

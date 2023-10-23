@@ -1,5 +1,6 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -10,27 +11,41 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.elvirafatkhutdinova.cocktailguideapp.CocktailGuideApplication
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailDetailBinding
-import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.RecipeAdapter
+import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.FavoriteViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
 
     private var _binding: FragmentCocktailDetailBinding? = null
     private val binding get() = _binding!!
-    private val cocktailViewModel: CocktailViewModel by viewModels { ViewModelFactory(requireActivity().application) }
-    private val favoriteViewModel: FavoriteViewModel by viewModels { ViewModelFactory(requireActivity().application) }
+    private lateinit var cocktailViewModel: CocktailViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private val args by navArgs<CocktailDetailFragmentArgs>()
     private var isAdded: Boolean = false
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as CocktailGuideApplication).applicationComponent
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +62,9 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        cocktailViewModel = ViewModelProvider(this, viewModelFactory)[CocktailViewModel::class.java]
+        favoriteViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteViewModel::class.java]
 
         setUpArrow()
 

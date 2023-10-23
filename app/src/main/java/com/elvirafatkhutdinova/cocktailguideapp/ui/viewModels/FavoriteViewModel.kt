@@ -1,11 +1,9 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.repository.FavoriteRepositoryImpl
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.DeleteFavoriteUseCase
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.InsertFavoriteUseCase
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.IsFavoriteByIdUseCase
@@ -13,14 +11,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FavoriteViewModel(application: Application) : ViewModel() {
-
-    private val favoriteRepository = FavoriteRepositoryImpl(application)
-
-    private val insertFavoriteUseCase = InsertFavoriteUseCase(favoriteRepository)
-    private val isFavoriteByIdUseCase = IsFavoriteByIdUseCase(favoriteRepository)
-    private val deleteFavoriteUseCase = DeleteFavoriteUseCase(favoriteRepository)
+class FavoriteViewModel @Inject constructor(
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val isFavoriteByIdUseCase: IsFavoriteByIdUseCase,
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase
+) : ViewModel() {
 
     fun setFavoriteCocktail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {

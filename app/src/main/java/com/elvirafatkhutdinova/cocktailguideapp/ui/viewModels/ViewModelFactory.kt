@@ -1,18 +1,17 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.elvirafatkhutdinova.cocktailguideapp.di.ApplicationScope
+import javax.inject.Inject
+import javax.inject.Provider
 
-class ViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+@ApplicationScope
+class ViewModelFactory @Inject constructor(
+    private val viewModelProviders: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(CocktailViewModel::class.java)) {
-            CocktailViewModel(application) as T
-        } else if (modelClass.isAssignableFrom(CategoryViewModel::class.java)) {
-            CategoryViewModel(application) as T
-        } else if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
-            FavoriteViewModel(application) as T
-        } else throw IllegalArgumentException("Unknown view model")
+        return viewModelProviders[modelClass]?.get() as T
     }
 }

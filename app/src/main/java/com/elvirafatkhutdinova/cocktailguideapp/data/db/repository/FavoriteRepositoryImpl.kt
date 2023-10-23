@@ -1,13 +1,12 @@
 package com.elvirafatkhutdinova.cocktailguideapp.data.db.repository
 
-import android.app.Application
-import com.elvirafatkhutdinova.cocktailguideapp.data.db.AppDatabase
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.FavoriteDao
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.FavoriteEntity
 import com.elvirafatkhutdinova.cocktailguideapp.domain.repository.FavoriteRepository
+import javax.inject.Inject
 
-class FavoriteRepositoryImpl(private val application: Application) : FavoriteRepository {
-
-    private val favoritesDao = AppDatabase.getDatabase(application).favoritesDao()
+class FavoriteRepositoryImpl @Inject constructor(private val favoritesDao: FavoriteDao) :
+    FavoriteRepository {
 
     override fun insertFavorite(id: String) {
         //TODO auto-generate id instead random
