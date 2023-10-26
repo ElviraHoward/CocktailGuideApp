@@ -2,20 +2,26 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.elvirafatkhutdinova.cocktailguideapp.CocktailGuideApplication
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.CocktailsAdapter
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
+import com.elvirafatkhutdinova.cocktailguideapp.util.Constants
 import javax.inject.Inject
 
 class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
@@ -57,17 +63,25 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         }
 
         viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner) { cocktails ->
-            cocktails?.apply {
-                val cocktailsAdapter = CocktailsAdapter(cocktails)
-                binding.rvCocktails.adapter = cocktailsAdapter
-                binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
-                cocktailsAdapter.onItemClick {
-                    findNavController().navigate(
-                        CocktailsFragmentDirections.actionCocktailListToCocktailDetail(
-                            it
-                        )
+            setupAdapter(binding.rvCocktails, cocktails)
+        }
+
+        viewModel.getRecentCocktails().observe(viewLifecycleOwner) { recents ->
+            setupAdapter(binding.rvRecentlyViewed, recents)
+        }
+    }
+
+    private fun setupAdapter(recyclerView: RecyclerView, cocktailsAndFavorites: List<CocktailsAndFavorites>) {
+        cocktailsAndFavorites?.apply {
+            val cocktailsAdapter = CocktailsAdapter(cocktailsAndFavorites)
+            recyclerView.adapter = cocktailsAdapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            cocktailsAdapter.onItemClick {
+                findNavController().navigate(
+                    CocktailsFragmentDirections.actionCocktailListToCocktailDetail(
+                        it
                     )
-                }
+                )
             }
         }
     }

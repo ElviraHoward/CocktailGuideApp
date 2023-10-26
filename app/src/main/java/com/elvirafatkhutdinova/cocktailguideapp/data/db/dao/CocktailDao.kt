@@ -29,6 +29,9 @@ interface CocktailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCocktails(cocktailEntities: List<CocktailEntity>)
 
+    @Query("select cocktail.* from cocktail inner join recent_cocktail on id_cocktail = id_recent_cocktail order by timestamp desc")
+    fun getRecentCocktails(): LiveData<List<CocktailsAndFavoritesEntity>>
+
     @Delete
     fun deleteCocktail(cocktailEntity: CocktailEntity)
 }

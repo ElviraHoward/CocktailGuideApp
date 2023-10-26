@@ -7,12 +7,14 @@ import androidx.room.RoomDatabase
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.CategoryDao
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.CocktailDao
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.FavoriteDao
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.dao.RecentCocktailDao
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CategoryEntity
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.CocktailEntity
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.FavoriteEntity
+import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.RecentCocktailEntity
 
 @Database(
-    entities = [CocktailEntity::class, CategoryEntity::class, FavoriteEntity::class],
+    entities = [CocktailEntity::class, CategoryEntity::class, FavoriteEntity::class, RecentCocktailEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -20,8 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cocktailDao(): CocktailDao
     abstract fun categoryDao(): CategoryDao
-
     abstract fun favoritesDao(): FavoriteDao
+    abstract fun recentCocktailDao(): RecentCocktailDao
 
     companion object {
 

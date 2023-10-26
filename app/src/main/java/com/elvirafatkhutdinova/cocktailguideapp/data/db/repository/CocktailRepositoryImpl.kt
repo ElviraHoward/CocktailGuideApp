@@ -38,6 +38,10 @@ class CocktailRepositoryImpl @Inject constructor(private val cocktailDao: Cockta
         return cocktailDao.getFavoriteCocktails().map { list -> list.map { it.asDomainModel() } }
     }
 
+    override fun getRecentCocktails(): LiveData<List<CocktailsAndFavorites>> {
+        return cocktailDao.getRecentCocktails().map { list -> list.map { it.asDomainModel() } }
+    }
+
     override suspend fun loadData() {
         withContext(Dispatchers.IO) {
             val cocktailsResponse = RetrofitInstance.api.getCocktailByFirstLetter()

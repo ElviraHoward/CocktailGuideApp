@@ -16,5 +16,7 @@ interface CocktailRepository {
 
     fun getCocktailsByFavorite(): LiveData<List<CocktailsAndFavorites>>
 
+    fun getRecentCocktails(): LiveData<List<CocktailsAndFavorites>>
+
     suspend fun loadData()
 }

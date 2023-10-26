@@ -3,10 +3,7 @@ package com.elvirafatkhutdinova.cocktailguideapp.data
 import com.elvirafatkhutdinova.cocktailguideapp.data.db.model.*
 import com.elvirafatkhutdinova.cocktailguideapp.data.network.model.CategoryListResponse
 import com.elvirafatkhutdinova.cocktailguideapp.data.network.model.CocktailListResponse
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Category
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Favorite
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.*
 
 fun CocktailEntity.asDomainModel() = Cocktail(
     idDrink = this.idDrink,
@@ -58,6 +55,11 @@ fun CategoryEntity.asDomainModel() = Category(strCategory = this.strCategory)
 fun FavoriteEntity.asDomainModel() = Favorite(
     id = this.id,
     idFavorite = this.idFavorite
+)
+
+fun RecentCocktail.asDatabaseModel() = RecentCocktailEntity(
+    idRecent = this.idRecent,
+    timestamp = this.timestamp
 )
 
 fun CategoryListResponse.asDatabaseModel() =

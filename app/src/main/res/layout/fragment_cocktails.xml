@@ -1,20 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.CocktailsFragment"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".ui.fragments.CocktailsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cocktails"
+        <TextView
+            android:id="@+id/recently_viewed_txt"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:text="Recently viewed"
+            android:layout_margin="10dp"
+            android:textColor="@color/black_text"
+            android:textSize="16sp" />
+
+        <ScrollView
+            android:id="@+id/recently_viewed_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recently_viewed_txt">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recently_viewed"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/cocktails_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recently_viewed_view"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Catalogue"
+                android:layout_margin="10dp"
+                android:textColor="@color/black_text"
+                android:textSize="16sp"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="See all"
+                android:layout_margin="10dp"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/cocktails_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/cocktails_txt">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cocktails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/generate_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/cocktails_view"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:text="Get random cocktail" />
 
     </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+
+</ScrollView>

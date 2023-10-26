@@ -1,6 +1,7 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -19,11 +21,13 @@ import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.CocktailGuideApplication
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailDetailBinding
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.RecipeAdapter
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.CocktailViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.FavoriteViewModel
 import com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels.ViewModelFactory
+import com.elvirafatkhutdinova.cocktailguideapp.util.Constants
 import javax.inject.Inject
 
 class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
@@ -69,6 +73,7 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
         setUpArrow()
 
         cocktailViewModel.getCocktailById(args.idCocktail)
+        cocktailViewModel.insertRecentCocktail(args.idCocktail)
 
         cocktailViewModel.cocktail.observe(viewLifecycleOwner) {
             binding.drinkName.text = it.strDrink

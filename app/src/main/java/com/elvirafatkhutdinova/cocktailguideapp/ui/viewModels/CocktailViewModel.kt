@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.RecentCocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -17,7 +20,9 @@ class CocktailViewModel @Inject constructor(
     private val getCocktailByIdUseCase: GetCocktailByIdUseCase,
     private val getCocktailsAndFavoritesByCategoryUseCase: GetCocktailsAndFavoritesByCategoryUseCase,
     private val getCocktailsByFavoriteUseCase: GetCocktailsByFavoriteUseCase,
-    private val loadCocktailsUseCase: LoadCocktailsUseCase
+    private val loadCocktailsUseCase: LoadCocktailsUseCase,
+    private val insertRecentCocktailUseCase: InsertRecentCocktailUseCase,
+    private val getRecentCocktailListUseCase: GetRecentCocktailListUseCase
 ) : ViewModel() {
 
     val cocktailsAndFavorites = getCocktailAndFavoriteListUseCase.invoke()
@@ -77,6 +82,15 @@ class CocktailViewModel @Inject constructor(
             _cocktailList.value = drinks
         }
     }
+
+    fun insertRecentCocktail(idRecent: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val recentCocktail = RecentCocktail(idRecent = idRecent, timestamp = System.currentTimeMillis())
+            insertRecentCocktailUseCase.invoke(recentCocktail)
+        }
+    }
+
+    fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
