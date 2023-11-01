@@ -48,4 +48,11 @@ class CocktailRepositoryImpl @Inject constructor(private val cocktailDao: Cockta
             cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
         }
     }
+
+    override suspend fun getRandomCocktail() {
+        withContext(Dispatchers.IO) {
+            val cocktailsResponse = RetrofitInstance.api.getRandomCocktail()
+            cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
+        }
+    }
 }

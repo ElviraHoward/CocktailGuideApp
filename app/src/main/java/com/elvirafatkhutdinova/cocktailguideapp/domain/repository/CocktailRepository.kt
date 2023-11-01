@@ -19,4 +19,6 @@ interface CocktailRepository {
     fun getRecentCocktails(): LiveData<List<CocktailsAndFavorites>>
 
     suspend fun loadData()
+
+    suspend fun getRandomCocktail()
 }

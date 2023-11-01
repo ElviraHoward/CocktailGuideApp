@@ -22,7 +22,8 @@ class CocktailViewModel @Inject constructor(
     private val getCocktailsByFavoriteUseCase: GetCocktailsByFavoriteUseCase,
     private val loadCocktailsUseCase: LoadCocktailsUseCase,
     private val insertRecentCocktailUseCase: InsertRecentCocktailUseCase,
-    private val getRecentCocktailListUseCase: GetRecentCocktailListUseCase
+    private val getRecentCocktailListUseCase: GetRecentCocktailListUseCase,
+    private val getRandomCocktailUseCase: GetRandomCocktailUseCase
 ) : ViewModel() {
 
     val cocktailsAndFavorites = getCocktailAndFavoriteListUseCase.invoke()
@@ -91,6 +92,12 @@ class CocktailViewModel @Inject constructor(
     }
 
     fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
+
+    fun getRandomCocktail() {
+        viewModelScope.launch {
+            getRandomCocktailUseCase.invoke()
+        }
+    }
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true

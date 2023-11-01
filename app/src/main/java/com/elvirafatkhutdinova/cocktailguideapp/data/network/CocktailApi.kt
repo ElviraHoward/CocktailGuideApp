@@ -11,7 +11,6 @@ interface CocktailApi {
     suspend fun getCocktailByFirstLetter(@Query("f") letter : String = "c") : CocktailListResponse
     @GET("list.php")
     suspend fun getCategories(@Query("c") list : String = "list") : CategoryListResponse
-
     @GET("random.php")
     suspend fun getRandomCocktail() : CocktailListResponse
 }

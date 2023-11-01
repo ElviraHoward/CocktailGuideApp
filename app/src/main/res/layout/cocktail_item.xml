@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/img_cocktail"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_empty_image" />

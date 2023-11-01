@@ -19,4 +19,5 @@ class RecentCocktailRepositoryImpl @Inject constructor(private val recentCocktai
     override fun deleteRecentCocktail(idRecent: String) {
         recentCocktailDao.deleteRecentCocktail(idRecent)
     }
+
 }
