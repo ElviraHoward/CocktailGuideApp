@@ -24,6 +24,7 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
     private val binding get() = _binding!!
     private lateinit var viewModel: CocktailViewModel
     private val args by navArgs<CocktailsByCategoryFragmentArgs>()
+    private val cocktailsAdapter = CocktailsAdapter()
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -54,8 +55,8 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
 
         viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
             if (args.category.isNotEmpty()) {
-                val cocktailsAdapter = CocktailsAdapter(cocktailsAndFavorites)
                 binding.rvCocktailsByCategory.adapter = cocktailsAdapter
+                cocktailsAdapter.submitList(cocktailsAndFavorites)
                 binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
 
                 cocktailsAdapter.onItemClick {

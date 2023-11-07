@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintDimensionRatio="3:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -24,13 +24,12 @@
             android:id="@+id/drink_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginStart="@dimen/max_margin"
+            android:layout_marginBottom="@dimen/max_margin"
             android:background="@drawable/rounded_background"
-            android:padding="10dp"
-            android:text="Cocktail"
+            android:padding="@dimen/content_padding"
             android:textColor="@color/black_text"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/image_view"
             app:layout_constraintStart_toStartOf="@+id/image_view" />
@@ -39,10 +38,10 @@
             android:id="@+id/cocktail_features"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/max_margin"
             android:background="@drawable/rounded_background"
             android:orientation="horizontal"
-            android:padding="15dp"
+            android:padding="@dimen/content_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view">
@@ -53,9 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Alcoholic"
                 android:textColor="@color/black_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/description_text_size" />
 
             <TextView
                 android:id="@+id/type_cocktail"
@@ -63,9 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Cocktail"
                 android:textColor="@color/black_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/description_text_size" />
 
             <TextView
                 android:id="@+id/glass_cocktail"
@@ -73,20 +70,19 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Glass"
                 android:textColor="@color/black_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/description_text_size" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/ingredients_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Ingredients"
+            android:layout_marginStart="@dimen/max_margin"
+            android:layout_marginTop="@dimen/max_margin"
             android:textColor="@color/black_text"
-            android:textSize="16sp"
+            android:text="@string/ingredients_title"
+            android:textSize="@dimen/name_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cocktail_features" />
@@ -95,10 +91,10 @@
             android:id="@+id/ingredients_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginStart="@dimen/max_margin"
+            android:layout_marginTop="@dimen/avg_margin"
+            android:layout_marginEnd="@dimen/max_margin"
+            android:layout_marginBottom="@dimen/max_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
@@ -107,12 +103,12 @@
             android:id="@+id/instructions_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="Instructions"
+            android:layout_marginStart="@dimen/max_margin"
+            android:layout_marginTop="@dimen/max_margin"
+            android:layout_marginEnd="@dimen/max_margin"
+            android:text="@string/instructions_title"
             android:textColor="@color/black_text"
-            android:textSize="16sp"
+            android:textSize="@dimen/name_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredients_list" />
@@ -121,12 +117,11 @@
             android:id="@+id/instructions_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:text="Instructions"
+            android:layout_marginStart="@dimen/max_margin"
+            android:layout_marginTop="@dimen/avg_margin"
+            android:layout_marginEnd="@dimen/max_margin"
             android:textColor="@color/black_text"
-            android:textSize="16sp"
+            android:textSize="@dimen/name_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/instructions_title" />

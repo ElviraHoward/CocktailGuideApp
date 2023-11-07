@@ -4,5 +4,5 @@ import com.elvirafatkhutdinova.cocktailguideapp.domain.repository.CocktailReposi
 import javax.inject.Inject
 
 class GetRandomCocktailUseCase @Inject constructor(private val repository: CocktailRepository) {
-    suspend operator fun invoke() = repository.getRandomCocktail()
+    suspend operator fun invoke(): Result<String> = repository.getRandomCocktail()
 }

@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/skipButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/button_height"
         android:background="@android:color/transparent"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"

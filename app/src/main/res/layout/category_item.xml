@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="15dp">
+    android:layout_marginBottom="@dimen/avg_margin">
 
     <TextView
         android:id="@+id/category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size"
         android:textColor="@color/black_text"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

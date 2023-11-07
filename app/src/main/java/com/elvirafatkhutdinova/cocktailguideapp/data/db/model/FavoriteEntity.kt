@@ -14,7 +14,6 @@ import androidx.room.PrimaryKey
 )
 data class FavoriteEntity(
     @PrimaryKey
-    val id: Int,
     @ColumnInfo(name = "id_favorite")
     val idFavorite: String
 )

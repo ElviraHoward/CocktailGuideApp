@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="120dp"
+    android:layout_width="@dimen/image_width"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp">
+    android:layout_margin="@dimen/radius_small_margin"
+    app:cardCornerRadius="@dimen/radius_small_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,24 +14,22 @@
 
         <ImageView
             android:id="@+id/img_cocktail"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/image_width"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/text_cocktail"
-            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_empty_image" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/text_cocktail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_text"
-            android:textSize="12sp"
+            android:textSize="@dimen/recents_text_size"
             android:textStyle="bold"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/radius_small_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_cocktail" />
@@ -40,7 +38,7 @@
             android:id="@+id/img_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/radius_small_margin"
             android:src="@drawable/ic_added_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="@dimen/max_margin" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

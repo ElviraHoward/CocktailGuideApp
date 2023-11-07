@@ -2,15 +2,19 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.elvirafatkhutdinova.cocktailguideapp.CocktailGuideApplication
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentCocktailsBinding
@@ -29,6 +33,8 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: CocktailViewModel
+    private lateinit var recentCocktailsAdapter: RecentCocktailsAdapter
+    private lateinit var cocktailsAdapter: CocktailsAdapter
 
     private val component by lazy {
         (requireActivity().application as CocktailGuideApplication).applicationComponent
@@ -46,6 +52,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     ): View {
         _binding = FragmentCocktailsBinding.inflate(layoutInflater, container, false)
 
+        Log.d("CocktailsFragment", "ON_CREATED")
         return binding.root
     }
 
@@ -58,27 +65,40 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
             if (isNetworkError) onNetworkError()
         }
 
-        viewModel.cocktailsAndFavorites.observe(viewLifecycleOwner) { cocktails ->
+        setupRecyclerView(binding.rvCocktails)
+        setupRecentRecyclerView(binding.rvRecentlyViewed)
+
+        viewModel.getCocktailsAndFavorites().observe(viewLifecycleOwner) { cocktails ->
             cocktails?.apply {
-                val cocktailsAdapter = CocktailsAdapter(cocktails)
-                binding.rvCocktails.adapter = cocktailsAdapter
-                binding.rvCocktails.layoutManager = GridLayoutManager(activity, 2)
-                cocktailsAdapter.onItemClick { navigateToDetails(it) }
+                cocktailsAdapter.submitList(cocktails)
             }
         }
 
         viewModel.getRecentCocktails().observe(viewLifecycleOwner) { recents ->
             recents?.apply {
-                val cocktailsAdapter = RecentCocktailsAdapter(recents)
-                binding.rvRecentlyViewed.adapter = cocktailsAdapter
-                binding.rvRecentlyViewed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                cocktailsAdapter.onItemClick { navigateToDetails(it) }
+                recentCocktailsAdapter.submitList(recents)
             }
         }
 
         binding.generateBtn.setOnClickListener {
-            viewModel.getRandomCocktail()
+            viewModel.getRandomCocktail {
+                navigateToDetails(it)
+            }
         }
+    }
+
+    private fun setupRecyclerView(recyclerView: RecyclerView) {
+        cocktailsAdapter = CocktailsAdapter()
+        recyclerView.adapter = cocktailsAdapter
+        recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        cocktailsAdapter.onItemClick { navigateToDetails(it) }
+    }
+
+    private fun setupRecentRecyclerView(recyclerView: RecyclerView) {
+        recentCocktailsAdapter = RecentCocktailsAdapter()
+        recyclerView.adapter = recentCocktailsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recentCocktailsAdapter.onItemClick { navigateToDetails(it) }
     }
 
     private fun navigateToDetails(idCocktail: String) {
@@ -97,5 +117,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        Log.d("CocktailsFragment", "ON_DESTROYED")
     }
 }

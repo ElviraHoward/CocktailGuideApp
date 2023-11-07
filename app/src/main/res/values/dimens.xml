@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="navigation_bottom">56dp</dimen>
+    <dimen name="min_margin">10dp</dimen>
+    <dimen name="avg_margin">15dp</dimen>
+    <dimen name="max_margin">20dp</dimen>
+    <dimen name="radius_small_margin">5dp</dimen>
+
+    <dimen name="content_padding">10dp</dimen>
+
+    <dimen name="button_margin">40dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+
+    <dimen name="image_height">180dp</dimen>
+    <dimen name="image_width">120dp</dimen>
+
+    <dimen name="on_boarding_image_height">300dp</dimen>
+    <dimen name="on_boarding_image_width">300dp</dimen>
+
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="name_text_size">16sp</dimen>
+    <dimen name="description_text_size">14sp</dimen>
+    <dimen name="recents_text_size">12sp</dimen>
+
 </resources>

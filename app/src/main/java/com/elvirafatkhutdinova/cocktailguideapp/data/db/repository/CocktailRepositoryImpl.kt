@@ -49,10 +49,23 @@ class CocktailRepositoryImpl @Inject constructor(private val cocktailDao: Cockta
         }
     }
 
-    override suspend fun getRandomCocktail() {
-        withContext(Dispatchers.IO) {
-            val cocktailsResponse = RetrofitInstance.api.getRandomCocktail()
-            cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
+    override suspend fun getRandomCocktail(): Result<String> {
+        var idCocktail : String
+        return try {
+            withContext(Dispatchers.IO) {
+                val cocktailsResponse = RetrofitInstance.api.getRandomCocktail()
+                idCocktail = cocktailsResponse.drinks.last().idDrink
+                cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
+            }
+            Result.success(idCocktail)
+        } catch (e : Exception) {
+            Result.failure(e)
         }
+
+/*        withContext(Dispatchers.IO) {
+            val cocktailsResponse = RetrofitInstance.api.getRandomCocktail()
+            cocktailsResponse.drinks.last().idDrink
+            cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
+        }*/
     }
 }

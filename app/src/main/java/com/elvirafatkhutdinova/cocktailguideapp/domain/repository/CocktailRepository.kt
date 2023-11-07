@@ -20,5 +20,5 @@ interface CocktailRepository {
 
     suspend fun loadData()
 
-    suspend fun getRandomCocktail()
+    suspend fun getRandomCocktail() : Result<String>
 }

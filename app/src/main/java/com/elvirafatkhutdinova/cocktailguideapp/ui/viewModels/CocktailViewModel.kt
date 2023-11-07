@@ -26,8 +26,6 @@ class CocktailViewModel @Inject constructor(
     private val getRandomCocktailUseCase: GetRandomCocktailUseCase
 ) : ViewModel() {
 
-    val cocktailsAndFavorites = getCocktailAndFavoriteListUseCase.invoke()
-
     private val _cocktail = MutableLiveData<Cocktail>()
     val cocktail: LiveData<Cocktail> get() = _cocktail
 
@@ -63,6 +61,8 @@ class CocktailViewModel @Inject constructor(
         }
     }
 
+    fun getCocktailsAndFavorites() = getCocktailAndFavoriteListUseCase.invoke()
+
     fun getCocktailById(id: String) {
         val drinkLiveData = getCocktailByIdUseCase.invoke(id)
         drinkLiveData.observeForever { drink ->
@@ -86,16 +86,23 @@ class CocktailViewModel @Inject constructor(
 
     fun insertRecentCocktail(idRecent: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val recentCocktail = RecentCocktail(idRecent = idRecent, timestamp = System.currentTimeMillis())
+            val recentCocktail =
+                RecentCocktail(idRecent = idRecent, timestamp = System.currentTimeMillis())
             insertRecentCocktailUseCase.invoke(recentCocktail)
         }
     }
 
     fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
 
-    fun getRandomCocktail() {
+    fun getRandomCocktail(completion: (String) -> Unit) {
         viewModelScope.launch {
-            getRandomCocktailUseCase.invoke()
+            val result = getRandomCocktailUseCase.invoke()
+            if (result.isSuccess) {
+                val idCocktail = result.getOrDefault("")
+                completion(idCocktail)
+            } else {
+                completion("")
+            }
         }
     }
 

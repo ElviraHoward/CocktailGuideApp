@@ -8,90 +8,61 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/recently_viewed_txt"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recently viewed"
-            android:layout_margin="10dp"
-            android:textColor="@color/black_text"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content">
 
-        <ScrollView
-            android:id="@+id/recently_viewed_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recently_viewed_txt">
+            <TextView
+                android:id="@+id/recently_viewed_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recently_viewed_title"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/name_text_size"
+                android:layout_margin="@dimen/min_margin"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recently_viewed"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </ScrollView>
-
-        <RelativeLayout
-            android:id="@+id/cocktails_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recently_viewed_view"
-            android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recently_viewed_txt"
+                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/radius_small_margin"/>
 
             <TextView
+                android:id="@+id/cocktails_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Catalogue"
-                android:layout_margin="10dp"
+                android:layout_below="@id/rv_recently_viewed"
+                android:layout_alignParentStart="true"
+                android:text="@string/catalogue_title"
+                android:layout_margin="@dimen/min_margin"
                 android:textColor="@color/black_text"
-                android:textSize="16sp"
-                android:layout_alignParentStart="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="See all"
-                android:layout_margin="10dp"
-                android:textColor="@color/grey"
-                android:textSize="16sp"
-                android:layout_alignParentEnd="true"/>
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:id="@+id/cocktails_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/cocktails_txt">
+                android:textSize="@dimen/name_text_size" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cocktails"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cocktails_txt" />
 
-        </ScrollView>
-
-    </RelativeLayout>
+        </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/generate_btn"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/button_margin"
+        android:layout_marginEnd="@dimen/button_margin"
+        android:layout_marginBottom="@dimen/avg_margin"
         android:background="@drawable/rounded_corners"
         android:gravity="center"
-        android:textSize="14sp"
-        android:layout_gravity="bottom"
-        android:text="Get random cocktail" />
+        android:text="@string/random_button_name"
+        android:textSize="@dimen/description_text_size" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,11 +9,7 @@ class FavoriteRepositoryImpl @Inject constructor(private val favoritesDao: Favor
     FavoriteRepository {
 
     override fun insertFavorite(id: String) {
-        //TODO auto-generate id instead random
-        val favEntity = FavoriteEntity(
-            (1..100).random(),
-            idFavorite = id
-        )
+        val favEntity = FavoriteEntity(idFavorite = id)
         favoritesDao.insertFavorite(favEntity)
     }
 

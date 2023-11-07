@@ -52,10 +52,7 @@ fun CocktailsAndFavoritesEntity.asDomainModel() = CocktailsAndFavorites(
 
 fun CategoryEntity.asDomainModel() = Category(strCategory = this.strCategory)
 
-fun FavoriteEntity.asDomainModel() = Favorite(
-    id = this.id,
-    idFavorite = this.idFavorite
-)
+fun FavoriteEntity.asDomainModel() = Favorite(idFavorite = this.idFavorite)
 
 fun RecentCocktail.asDatabaseModel() = RecentCocktailEntity(
     idRecent = this.idRecent,

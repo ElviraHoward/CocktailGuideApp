@@ -11,5 +11,10 @@
     <string name="categories_tab">Categories</string>
     <string name="favorites_tab">Favorites</string>
     <string name="network_error">Network Error</string>
+    <string name="recently_viewed_title">Recently viewed</string>
+    <string name="catalogue_title">Catalogue</string>
+    <string name="random_button_name">Get random cocktail</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="instructions_title">Instructions</string>
 
 </resources>

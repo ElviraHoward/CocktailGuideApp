@@ -1,21 +1,25 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.RecentCocktailItemBinding
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
+import com.elvirafatkhutdinova.cocktailguideapp.domain.model.RecentCocktail
 import com.elvirafatkhutdinova.cocktailguideapp.ui.OnItemClickListener
 
-class RecentCocktailsAdapter(private val cocktailsAndFavorites: List<CocktailsAndFavorites>) :
-    RecyclerView.Adapter<RecentCocktailsAdapter.RecentCocktailViewHolder>(),
+class RecentCocktailsAdapter() : ListAdapter<CocktailsAndFavorites, RecentCocktailsAdapter.RecentCocktailViewHolder>(RecentCocktailDiffUtil),
     OnItemClickListener<(String) -> Unit> {
 
     private var onItemClickListener: ((String) -> Unit)? = null
 
-    inner class RecentCocktailViewHolder(val binding: RecentCocktailItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class RecentCocktailViewHolder(val binding: RecentCocktailItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentCocktailViewHolder {
         val itemBinding = RecentCocktailItemBinding.inflate(
@@ -26,17 +30,14 @@ class RecentCocktailsAdapter(private val cocktailsAndFavorites: List<CocktailsAn
         return RecentCocktailViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int {
-        return cocktailsAndFavorites.size
-    }
-
     override fun onBindViewHolder(holder: RecentCocktailViewHolder, position: Int) {
         with(holder) {
-            val cocktail = cocktailsAndFavorites[position].cocktail
-            val favorite = cocktailsAndFavorites[position].favorite
+            val cocktail = getItem(position).cocktail
+            val favorite = getItem(position).favorite
             holder.itemView.apply {
                 binding.textCocktail.text = cocktail.strDrink
-                Glide.with(this).load(cocktail.strDrinkThumb).into(binding.imgCocktail)
+                Glide.with(this).load(cocktail.strDrinkThumb).placeholder(R.drawable.ic_empty_image)
+                    .into(binding.imgCocktail)
                 setOnClickListener {
                     onItemClickListener?.let { it(cocktail.idDrink) }
                 }
@@ -52,5 +53,16 @@ class RecentCocktailsAdapter(private val cocktailsAndFavorites: List<CocktailsAn
 
     override fun onItemClick(listener: (String) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private object RecentCocktailDiffUtil : DiffUtil.ItemCallback<CocktailsAndFavorites>() {
+        override fun areItemsTheSame(oldItem: CocktailsAndFavorites, newItem: CocktailsAndFavorites): Boolean {
+            return oldItem.cocktail.idDrink == newItem.cocktail.idDrink
+        }
+
+        override fun areContentsTheSame(oldItem: CocktailsAndFavorites, newItem: CocktailsAndFavorites): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }

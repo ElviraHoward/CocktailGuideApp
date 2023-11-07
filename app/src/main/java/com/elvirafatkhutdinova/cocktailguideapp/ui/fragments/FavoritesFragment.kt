@@ -21,6 +21,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
+    private val cocktailsAdapter = CocktailsAdapter()
 
     private lateinit var viewModel: CocktailViewModel
 
@@ -53,8 +54,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         viewModel.getCocktailsByFavorite()
 
         viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
-            val cocktailsAdapter = CocktailsAdapter(cocktailsAndFavorites)
             binding.rvFavoriteCocktails.adapter = cocktailsAdapter
+            cocktailsAdapter.submitList(cocktailsAndFavorites)
             binding.rvFavoriteCocktails.layoutManager = GridLayoutManager(activity, 2)
             cocktailsAdapter.onItemClick {
                 findNavController().navigate(FavoritesFragmentDirections.actionFavoriteListToCocktailDetailFromFavorites(it))
