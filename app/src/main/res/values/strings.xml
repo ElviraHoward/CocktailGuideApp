@@ -16,5 +16,6 @@
     <string name="random_button_name">Get random cocktail</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="instructions_title">Instructions</string>
+    <string name="search_title">Search</string>
 
 </resources>

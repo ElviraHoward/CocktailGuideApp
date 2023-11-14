@@ -3,7 +3,7 @@
 
     <item android:id="@+id/home"
         android:title="@string/cocktails_tab"
-        android:icon="@drawable/ic_cockails"/>
+        android:icon="@drawable/ic_cocktails"/>
 
     <item android:id="@+id/categories"
         android:title="@string/categories_tab"

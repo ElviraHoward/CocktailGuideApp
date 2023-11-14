@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.FavoritesFragment">
+    tools:context=".ui.fragments.FavoritesFragment"
+    android:layout_marginBottom="@dimen/navigation_bottom"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_cocktails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:layout_marginStart="@dimen/radius_small_margin"
+        android:layout_marginEnd="@dimen/radius_small_margin"/>
 
 </RelativeLayout>

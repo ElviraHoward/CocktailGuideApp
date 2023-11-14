@@ -51,9 +51,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CocktailViewModel::class.java]
 
-        viewModel.getCocktailsByFavorite()
-
-        viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
+        viewModel.getCocktailsByFavorite().observe(viewLifecycleOwner) { cocktailsAndFavorites ->
             binding.rvFavoriteCocktails.adapter = cocktailsAdapter
             cocktailsAdapter.submitList(cocktailsAndFavorites)
             binding.rvFavoriteCocktails.layoutManager = GridLayoutManager(activity, 2)

@@ -72,10 +72,8 @@ class CocktailDetailFragment : Fragment(R.layout.fragment_cocktail_detail) {
 
         setUpArrow()
 
-        cocktailViewModel.getCocktailById(args.idCocktail)
-        cocktailViewModel.insertRecentCocktail(args.idCocktail)
-
-        cocktailViewModel.cocktail.observe(viewLifecycleOwner) {
+        cocktailViewModel.getCocktailById(args.idCocktail).observe(viewLifecycleOwner){
+            cocktailViewModel.insertRecentCocktail(it.idDrink)
             binding.drinkName.text = it.strDrink
             binding.categoryCocktail.text = it.strCategory
             binding.glassCocktail.text = it.strGlass

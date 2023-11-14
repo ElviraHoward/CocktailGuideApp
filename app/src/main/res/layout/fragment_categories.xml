@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.CategoriesFragment">
+    tools:context=".ui.fragments.CategoriesFragment"
+    android:layout_marginBottom="@dimen/navigation_bottom"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginStart="@dimen/avg_margin"
         android:layout_marginEnd="@dimen/avg_margin"
         android:layout_marginBottom="@dimen/avg_margin"/>

@@ -52,18 +52,21 @@ class CocktailsByCategoryFragment : Fragment(R.layout.fragment_cocktails_by_cate
         viewModel = ViewModelProvider(this, viewModelFactory)[CocktailViewModel::class.java]
 
         viewModel.getCocktailsByCategory(args.category)
+            .observe(viewLifecycleOwner) { cocktailsAndFavorites ->
+                if (args.category.isNotEmpty()) {
+                    binding.rvCocktailsByCategory.adapter = cocktailsAdapter
+                    cocktailsAdapter.submitList(cocktailsAndFavorites)
+                    binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
 
-        viewModel.cocktailList.observe(viewLifecycleOwner) { cocktailsAndFavorites ->
-            if (args.category.isNotEmpty()) {
-                binding.rvCocktailsByCategory.adapter = cocktailsAdapter
-                cocktailsAdapter.submitList(cocktailsAndFavorites)
-                binding.rvCocktailsByCategory.layoutManager = GridLayoutManager(activity, 2)
-
-                cocktailsAdapter.onItemClick {
-                    findNavController().navigate(CocktailsByCategoryFragmentDirections.actionCocktailListByCategoryToCocktailDetailFromFragment(it))
+                    cocktailsAdapter.onItemClick {
+                        findNavController().navigate(
+                            CocktailsByCategoryFragmentDirections.actionCocktailListByCategoryToCocktailDetailFromFragment(
+                                it
+                            )
+                        )
+                    }
                 }
             }
-        }
     }
 
     override fun onDestroy() {

@@ -4,11 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.Cocktail
-import com.elvirafatkhutdinova.cocktailguideapp.domain.model.CocktailsAndFavorites
 import com.elvirafatkhutdinova.cocktailguideapp.domain.model.RecentCocktail
 import com.elvirafatkhutdinova.cocktailguideapp.domain.usecase.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -25,12 +22,6 @@ class CocktailViewModel @Inject constructor(
     private val getRecentCocktailListUseCase: GetRecentCocktailListUseCase,
     private val getRandomCocktailUseCase: GetRandomCocktailUseCase
 ) : ViewModel() {
-
-    private val _cocktail = MutableLiveData<Cocktail>()
-    val cocktail: LiveData<Cocktail> get() = _cocktail
-
-    private val _cocktailList = MutableLiveData<List<CocktailsAndFavorites>>()
-    val cocktailList: LiveData<List<CocktailsAndFavorites>> get() = _cocktailList
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
@@ -60,40 +51,19 @@ class CocktailViewModel @Inject constructor(
             }
         }
     }
-
     fun getCocktailsAndFavorites() = getCocktailAndFavoriteListUseCase.invoke()
-
-    fun getCocktailById(id: String) {
-        val drinkLiveData = getCocktailByIdUseCase.invoke(id)
-        drinkLiveData.observeForever { drink ->
-            _cocktail.value = drink
-        }
-    }
-
-    fun getCocktailsByCategory(category: String) {
-        val drinkLiveData = getCocktailsAndFavoritesByCategoryUseCase.invoke(category)
-        drinkLiveData.observeForever { drinks ->
-            _cocktailList.value = drinks
-        }
-    }
-
-    fun getCocktailsByFavorite() {
-        val drinkLiveData = getCocktailsByFavoriteUseCase.invoke()
-        drinkLiveData.observeForever { drinks ->
-            _cocktailList.value = drinks
-        }
-    }
+    fun getCocktailById(id: String) = getCocktailByIdUseCase.invoke(id)
+    fun getCocktailsByCategory(category: String) = getCocktailsAndFavoritesByCategoryUseCase.invoke(category)
+    fun getCocktailsByFavorite() = getCocktailsByFavoriteUseCase.invoke()
+    fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
 
     fun insertRecentCocktail(idRecent: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val recentCocktail =
                 RecentCocktail(idRecent = idRecent, timestamp = System.currentTimeMillis())
             insertRecentCocktailUseCase.invoke(recentCocktail)
         }
     }
-
-    fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
-
     fun getRandomCocktail(completion: (String) -> Unit) {
         viewModelScope.launch {
             val result = getRandomCocktailUseCase.invoke()
@@ -105,9 +75,7 @@ class CocktailViewModel @Inject constructor(
             }
         }
     }
-
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
-
 }

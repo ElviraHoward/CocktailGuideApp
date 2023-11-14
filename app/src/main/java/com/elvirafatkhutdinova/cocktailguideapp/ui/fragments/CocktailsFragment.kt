@@ -3,11 +3,11 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Adapter
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -51,7 +51,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCocktailsBinding.inflate(layoutInflater, container, false)
-
         Log.d("CocktailsFragment", "ON_CREATED")
         return binding.root
     }
@@ -76,7 +75,14 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
         viewModel.getRecentCocktails().observe(viewLifecycleOwner) { recents ->
             recents?.apply {
-                recentCocktailsAdapter.submitList(recents)
+                if (this.isEmpty()) {
+                    binding.recentlyViewedTxt.visibility = View.GONE
+                    binding.rvRecentlyViewed.visibility = View.GONE
+                } else {
+                    binding.recentlyViewedTxt.visibility = View.VISIBLE
+                    binding.rvRecentlyViewed.visibility = View.VISIBLE
+                    recentCocktailsAdapter.submitList(recents)
+                }
             }
         }
 

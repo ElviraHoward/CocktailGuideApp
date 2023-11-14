@@ -12,16 +12,11 @@ class CategoryViewModel @Inject constructor(
     private val loadCategoryUseCase: LoadCategoriesUseCase
 ) : ViewModel() {
 
-    val categories = getCategoryListUseCase.invoke()
-
     init {
-        getCategories()
-    }
-
-    private fun getCategories() {
         viewModelScope.launch {
             loadCategoryUseCase.invoke()
         }
     }
+    fun getCategories() = getCategoryListUseCase.invoke()
 
 }

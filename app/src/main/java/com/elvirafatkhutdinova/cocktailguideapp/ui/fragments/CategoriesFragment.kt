@@ -50,7 +50,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoryViewModel::class.java]
 
-        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+        viewModel.getCategories().observe(viewLifecycleOwner) { categories ->
             categories?.apply {
                 val categoriesAdapter = CategoriesAdapter(categories)
                 binding.rvCategories.adapter = categoriesAdapter

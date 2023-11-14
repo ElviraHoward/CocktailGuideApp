@@ -120,6 +120,7 @@
             android:layout_marginStart="@dimen/max_margin"
             android:layout_marginTop="@dimen/avg_margin"
             android:layout_marginEnd="@dimen/max_margin"
+            android:layout_marginBottom="@dimen/avg_margin"
             android:textColor="@color/black_text"
             android:textSize="@dimen/name_text_size"
             app:layout_constraintEnd_toEndOf="parent"

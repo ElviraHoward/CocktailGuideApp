@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.elvirafatkhutdinova.cocktailguideapp.R
 import com.elvirafatkhutdinova.cocktailguideapp.databinding.FragmentOnBoardingBinding
+import com.elvirafatkhutdinova.cocktailguideapp.ui.CocktailsActivity
 import com.elvirafatkhutdinova.cocktailguideapp.ui.adapters.OnBoardingAdapter
 import com.elvirafatkhutdinova.cocktailguideapp.util.Constants.Companion.ON_BOARDING_SHOWN
 import com.google.android.material.tabs.TabLayoutMediator
@@ -53,7 +54,7 @@ class OnBoardingFragment : Fragment() {
         setupClickListeners(sharedPreferences)
         setupViewPagerListener(adapter)
 
-        (activity as AppCompatActivity).supportActionBar?.hide()
+        (activity as CocktailsActivity).supportActionBar?.hide()
     }
 
     private fun setupClickListeners(sharedPreferences: SharedPreferences) {
@@ -92,6 +93,11 @@ class OnBoardingFragment : Fragment() {
     private fun callHomeFragment(sharedPreferences: SharedPreferences) {
         findNavController().navigate(R.id.action_onBoardingFragment_to_cocktailList)
         onBoardingWasShown(sharedPreferences)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as CocktailsActivity).supportActionBar?.show()
     }
 
     override fun onDestroy() {
