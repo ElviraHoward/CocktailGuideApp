@@ -10,8 +10,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_cocktails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/radius_small_margin"
-        android:layout_marginEnd="@dimen/radius_small_margin"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

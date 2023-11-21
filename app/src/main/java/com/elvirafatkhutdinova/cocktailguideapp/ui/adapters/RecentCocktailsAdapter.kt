@@ -37,7 +37,7 @@ class RecentCocktailsAdapter() : ListAdapter<CocktailsAndFavorites, RecentCockta
             holder.itemView.apply {
                 binding.textCocktail.text = cocktail.strDrink
                 Glide.with(this).load(cocktail.strDrinkThumb).placeholder(R.drawable.ic_empty_image)
-                    .into(binding.imgCocktail)
+                    .into(binding.imgRecentCocktail)
                 setOnClickListener {
                     onItemClickListener?.let { it(cocktail.idDrink) }
                 }

@@ -3,15 +3,13 @@ package com.elvirafatkhutdinova.cocktailguideapp.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.Adapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,10 +58,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CocktailViewModel::class.java]
 
-        viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
-            if (isNetworkError) onNetworkError()
-        }
-
         setupRecyclerView(binding.rvCocktails)
         setupRecentRecyclerView(binding.rvRecentlyViewed)
 
@@ -83,6 +77,13 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
                     binding.rvRecentlyViewed.visibility = View.VISIBLE
                     recentCocktailsAdapter.submitList(recents)
                 }
+            }
+        }
+
+        viewModel.eventNetworkError.observe(viewLifecycleOwner) {
+            if (it && !viewModel.isNetworkErrorShown.value!!) {
+                Toast.makeText(requireContext(), R.string.network_error, Toast.LENGTH_LONG).show()
+                viewModel.onNetworkErrorShown()
             }
         }
 
@@ -111,13 +112,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         findNavController().navigate(
             CocktailsFragmentDirections.actionCocktailListToCocktailDetail(idCocktail)
         )
-    }
-
-    private fun onNetworkError() {
-        if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(activity, R.string.network_error, Toast.LENGTH_LONG).show()
-            viewModel.onNetworkErrorShown()
-        }
     }
 
     override fun onDestroy() {

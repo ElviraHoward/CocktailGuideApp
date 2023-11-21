@@ -1,5 +1,6 @@
 package com.elvirafatkhutdinova.cocktailguideapp.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -44,16 +45,17 @@ class CocktailViewModel @Inject constructor(
                     _eventNetworkError.value = false
                     _isNetworkErrorShown.value = false
                 } catch (networkError: IOException) {
-                    if (getCocktailListUseCase.invoke().value.isNullOrEmpty()) {
-                        _eventNetworkError.value = true
-                    }
+                    _eventNetworkError.value = true
                 }
             }
         }
     }
+
     fun getCocktailsAndFavorites() = getCocktailAndFavoriteListUseCase.invoke()
     fun getCocktailById(id: String) = getCocktailByIdUseCase.invoke(id)
-    fun getCocktailsByCategory(category: String) = getCocktailsAndFavoritesByCategoryUseCase.invoke(category)
+    fun getCocktailsByCategory(category: String) =
+        getCocktailsAndFavoritesByCategoryUseCase.invoke(category)
+
     fun getCocktailsByFavorite() = getCocktailsByFavoriteUseCase.invoke()
     fun getRecentCocktails() = getRecentCocktailListUseCase.invoke()
 
@@ -64,6 +66,7 @@ class CocktailViewModel @Inject constructor(
             insertRecentCocktailUseCase.invoke(recentCocktail)
         }
     }
+
     fun getRandomCocktail(completion: (String) -> Unit) {
         viewModelScope.launch {
             val result = getRandomCocktailUseCase.invoke()
@@ -75,6 +78,7 @@ class CocktailViewModel @Inject constructor(
             }
         }
     }
+
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
