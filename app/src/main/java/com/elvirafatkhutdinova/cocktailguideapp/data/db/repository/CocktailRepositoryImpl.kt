@@ -62,10 +62,5 @@ class CocktailRepositoryImpl @Inject constructor(private val cocktailDao: Cockta
             Result.failure(e)
         }
 
-/*        withContext(Dispatchers.IO) {
-            val cocktailsResponse = RetrofitInstance.api.getRandomCocktail()
-            cocktailsResponse.drinks.last().idDrink
-            cocktailDao.insertCocktails(cocktailsResponse.asDatabaseModel())
-        }*/
     }
 }

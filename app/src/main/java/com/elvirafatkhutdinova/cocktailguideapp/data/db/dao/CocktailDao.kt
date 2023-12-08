@@ -14,15 +14,12 @@ interface CocktailDao {
     @Query("SELECT * FROM cocktail WHERE id_cocktail=:id")
     fun getCocktailById(id: String): LiveData<CocktailEntity>
 
-    @Transaction
     @Query("SELECT * FROM cocktail WHERE category=:category")
     fun getCocktailsByCategory(category: String): LiveData<List<CocktailsAndFavoritesEntity>>
 
-    @Transaction
     @Query("SELECT * FROM cocktail LEFT JOIN favorite on id_cocktail=id_favorite WHERE id_favorite IS NOT NULL")
     fun getFavoriteCocktails(): LiveData<List<CocktailsAndFavoritesEntity>>
 
-    @Transaction
     @Query("SELECT * FROM cocktail")
     fun getCocktailsAndFavorites(): LiveData<List<CocktailsAndFavoritesEntity>>
 
